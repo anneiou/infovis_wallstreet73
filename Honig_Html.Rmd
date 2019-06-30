@@ -1,0 +1,83 @@
+---
+title: "Bee_HTML"
+author: "Anne Vollema"
+date: "26 6 2019"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(knitr)
+library(cowplot)
+library(RColorBrewer)
+library(measurements)
+#colorbrewer palette YlOrBr
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+honeyproduction <- read.csv(file="honeyproduction.csv", header=TRUE, sep=",")
+
+yieldpercol_kg <- conv_unit(yieldpercol, kg)
+
+#nomissing values 
+#colSums(is.na(honeyproduction))
+```
+
+
+```{r cars}
+summary(honeyproduction)
+```
+
+Honeyproduction from 1998-2012
+```{r}
+honeyyear <- honeyproduction %>%
+  group_by(year) %>%
+  summarise(YearTotal=sum(totalprod))
+
+ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000)) + 
+  geom_smooth(method = "lm") + 
+  geom_line(color = "#f3a328", size = 2) +
+  geom_point() +
+  scale_x_continuous(breaks=seq(1998, 2012, 1)) +
+  ylab("production (in million lb)") +
+  xlab("years") +
+  theme_bw()+
+  background_grid(major = "xy", minor="y", size.major = 0.2) 
+```
+
+```{r}
+ggplot(data=honeyproduction, aes(x=numcol, y=totalprod/100000)) + 
+  geom_smooth(method = "lm") + 
+  geom_line(color = "#f3a328", size = 2) +
+  geom_point() +
+  scale_x_continuous(breaks=seq(1998, 2012, 1)) +
+  ylab("number of honeyproducing colonies per State") +
+  xlab("total production (in lbs)") +
+  theme_bw()+
+  background_grid(major = "xy", minor="y", size.major = 0.2)
+```
+
+```{r}
+honeyperstate <- honeyproduction %>%
+    group_by(state) %>%
+    summarise(sumprod=sum(totalprod)) %>%
+    arrange(sumprod) %>%
+    head(10) %>%
+    mutate(percentage=round(sumprod/sum(sumprod)*100,2))
+    
+ggplot(data=honeyperstate,
+          aes(
+              x=reorder(state,sumprod),
+              y=sumprod/1000000
+          )
+       )+
+       geom_col(aes(fill=state),show.legend=F)+
+       geom_text(aes(label=percentage))+
+       coord_flip()+
+       labs(x="states in the USA",y="total honey produced (in million lb)",title="total honey produced by each state")  +
+       background_grid(major = "xy", minor="y", size.major = 0.2) 
+```
+
