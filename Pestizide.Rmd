@@ -1,0 +1,44 @@
+---
+title: "Pestizide"
+author: "Tom Gerlach"
+date: "7/4/2019"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(cowplot)
+library(RColorBrewer)
+library(measurements)
+
+pesticides <- read.csv(file="vHoneyNeonic_v03.csv", header=TRUE, sep=",")
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+pesticides_clean <- na.omit(pesticides)
+
+pesticides_year <- pesticides_clean %>%
+  group_by(year) %>%
+  summarise(production_year=sum(totalprod))
+
+pesticides_year2 <- pesticides_clean %>% 
+  group_by(year) %>% 
+  summarise(neonics_year=sum(nAllNeonic))
+
+pesticides_year_total <- merge(pesticides_year, pesticides_year2)
+
+ggplot(data=pesticides_year_total, aes(year)) +
+  geom_line(aes(y=production_year)) +
+  geom_line(aes(y=neonics_year)) +
+  theme_bw()
+```
+
+
