@@ -20,7 +20,8 @@ library(measurements)
 knitr::opts_chunk$set(echo = TRUE)
 honeyproduction <- read.csv(file="honeyproduction.csv", header=TRUE, sep=",")
 
-yieldpercol_kg <- conv_unit(yieldpercol, kg)
+#damit lbs in kg konvertiert wird (klappt noch nicht)
+yieldpercol_kg <- conv_unit(yieldpercol, lbs, kg)
 
 #nomissing values 
 #colSums(is.na(honeyproduction))
@@ -65,7 +66,7 @@ honeyperstate <- honeyproduction %>%
     group_by(state) %>%
     summarise(sumprod=sum(totalprod)) %>%
     arrange(sumprod) %>%
-    head(10) %>%
+    #head(15) %>%
     mutate(percentage=round(sumprod/sum(sumprod)*100,2))
     
 ggplot(data=honeyperstate,
@@ -77,7 +78,9 @@ ggplot(data=honeyperstate,
        geom_col(aes(fill=state),show.legend=F)+
        geom_text(aes(label=percentage))+
        coord_flip()+
-       labs(x="states in the USA",y="total honey produced (in million lb)",title="total honey produced by each state")  +
+       labs(x="states in the USA",y="total honey produced (in million lb)",title="total honey produced by each state (top 15 states)")  +
        background_grid(major = "xy", minor="y", size.major = 0.2) 
+
+##andere farbe -< YlOrBr (colorbrewer), head soll eig. nur die höchsten zeigen, aber in anwendung zeigt head erst ab 11, nochwas
 ```
 

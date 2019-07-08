@@ -1,0 +1,16 @@
+---
+title: "bee_photos"
+author: "Anne Vollema"
+date: "8 7 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+bee_image <- read.csv(file="bee_data.csv", header=TRUE, sep=",")
+```
+
+```{r}
+bee_image
+```
+
