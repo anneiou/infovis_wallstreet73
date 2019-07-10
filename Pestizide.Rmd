@@ -35,10 +35,42 @@ pesticides_year2 <- pesticides_clean %>%
 
 pesticides_year_total <- merge(pesticides_year, pesticides_year2)
 
-ggplot(data=pesticides_year_total, aes(year)) +
-  geom_line(aes(y=production_year)) +
-  geom_line(aes(y=neonics_year)) +
+ggplot(data=pesticides_year,aes(x=year, y=production_year/1000000)) +
+  geom_line() +
+  geom_point() +
+  xlab("Years") +
+  ylab("Total amount of honey production in the US in lb")
   theme_bw()
+  
+ggplot(data=pesticides_year2,aes(x=year, y=neonics_year/1000000)) +
+  geom_line() +
+  geom_point() +
+  xlab("Years") +
+  ylab("Total amount of neonic pesticides applied in the US in lb")
+  theme_bw()
+
+```
+
+
+```{r}
+p <- ggplot(pesticides_year_total, aes(x = year))
+p <- p + geom_line(aes(y = production_year, colour = "Production"))
+
+  
+ 
+p <- p + geom_line(aes(y = neonics_year*50, colour = "Pesticides"))
+  
+  
+#p <- p + scale_y_continuous(sec.axis = sec_axis(~./50, name = "Amount of neonics applied in lb"))
+p <- p + scale_y_continuous(breaks=c())
+  
+ 
+p <- p + scale_colour_manual(values = c("blue", "red"))
+p <- p + labs(y = "Amount of honey produced in M lb",
+                x = "Year",
+                colour = "Parameter")
+p <- p + theme_bw()
+p
 ```
 
 

@@ -20,7 +20,11 @@ library(measurements)
 knitr::opts_chunk$set(echo = TRUE)
 honeyproduction <- read.csv(file="honeyproduction.csv", header=TRUE, sep=",")
 
-yieldpercol_kg <- conv_unit(yieldpercol, kg)
+honeyproduction <- honeyproduction %>% 
+  mutate(yieldpercol_kg = conv_unit(yieldpercol, "lbs", "kg"),
+         price_per_kg = priceperlb / conv_unit(1, "lbs", "kg")
+         )
+
 
 #nomissing values 
 #colSums(is.na(honeyproduction))
@@ -65,8 +69,8 @@ honeyperstate <- honeyproduction %>%
     group_by(state) %>%
     summarise(sumprod=sum(totalprod)) %>%
     arrange(sumprod) %>%
-    head(10) %>%
-    mutate(percentage=round(sumprod/sum(sumprod)*100,2))
+    mutate(percentage=round(sumprod/sum(sumprod)*100,2)) %>% 
+    top_n(10)
     
 ggplot(data=honeyperstate,
           aes(
