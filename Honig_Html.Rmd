@@ -12,31 +12,13 @@ library(knitr)
 library(cowplot)
 library(RColorBrewer)
 library(measurements)
-library(lubridate)
-library(data.table)
-library(ggrepel)
-library(dplyr)
-require(maps)
-require(viridis)
-theme_set(
-  theme_void()
-  )
 #colorbrewer palette YlOrBr
 ```
 
-```{r}
+
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 honeyproduction <- read.csv(file="honeyproduction.csv", header=TRUE, sep=",")
-
-state_honeyproduction <-  honeyproduction %>% 
-  group_by(state) %>% 
-  summarize(mean = mean(dt),
-            sum = sum(dt))
-state_honeyproduction <-  honeyproduction %>% 
-  group_by(state) %>% 
-  summarize(mean = mean(dt),
-            sum = sum(dt))
-
 honeyproduction <- honeyproduction %>% 
   mutate(yieldpercol_kg = conv_unit(yieldpercol, "lbs", "kg"),
          price_per_kg = priceperlb / conv_unit(1, "lbs", "kg")
@@ -49,40 +31,17 @@ honeyproduction <- honeyproduction %>%
 ```{r cars}
 summary(honeyproduction)
 ```
-```{r}
-#Colorvariables
-col1 = "#011f4b"
-
-col2 = "#6497b1"
-
-col3 = "#b3cde0"
-
-col4 = "#CC0000"
-```
-
-```{r}
-
-
-if(!requireNamespace("devtools")) install.packages("devtools")
-devtools::install_github("dkahle/ggmap", ref = "tidyup", force=TRUE)
-library("ggmap")
-ggmap::register_google(key = "AIzaSyAYaDki4XYoPPFNcwDx3jnOkcgGa7FWk4g")
-```
-
-
 
 Honeyproduction from 1998-2012
 ```{r}
 honeyyear <- honeyproduction %>%
   group_by(year) %>%
   summarise(YearTotal=sum(totalprod))
-
 ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000)) + 
   geom_smooth(method = "lm") + 
   geom_line(color = "#f3a328", size = 2) +
   geom_point() +
   scale_x_continuous(breaks=seq(1998, 2012, 1)) +
-  ggtitle("Total US honeyproduction in lbs from 1998 to 2012")+
   ylab("production (in million lb)") +
   xlab("years") +
   theme_bw()+
@@ -100,14 +59,14 @@ ggplot(data=honeyproduction, aes(x=numcol, y=totalprod/100000)) +
   theme_bw()+
   background_grid(major = "xy", minor="y", size.major = 0.2)
 ```
-#dyRangeSelector http://commercedataservice.github.io/cda_storytelling_in_r/
+
 ```{r}
 honeyperstate <- honeyproduction %>%
     group_by(state) %>%
     summarise(sumprod=sum(totalprod)) %>%
     arrange(sumprod) %>%
-    head(10) %>%
-    mutate(percentage=round(sumprod/sum(sumprod)*100,2))
+    mutate(percentage=round(sumprod/sum(sumprod)*100,2)) %>% 
+    top_n(10)
     
 ggplot(data=honeyperstate,
           aes(
@@ -115,12 +74,9 @@ ggplot(data=honeyperstate,
               y=sumprod/1000000
           )
        )+
-       geom_col(aes(fill=state),show.legend=T)+
+       geom_col(aes(fill=state),show.legend=F)+
        geom_text(aes(label=percentage))+
        coord_flip()+
-       labs(x="states in the USA",y="total honey produced (in million lb)",title="total honey produced by each state (top 15 states) from 1998-2012")  +
+       labs(x="states in the USA",y="total honey produced (in million lb)",title="total honey produced by each state")  +
        background_grid(major = "xy", minor="y", size.major = 0.2) 
-
-##andere farbe -< YlOrBr (colorbrewer), head soll eig. nur die höchsten zeigen, aber in anwendung zeigt head erst ab 11, nochwas
 ```
-
