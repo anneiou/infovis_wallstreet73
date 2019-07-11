@@ -17,6 +17,15 @@ library(measurements)
 pesticides <- read.csv(file="vHoneyNeonic_v03.csv", header=TRUE, sep=",")
 ```
 
+```{r}
+#Umrechnen von Pfund in Kilogramm
+pesticides <- pesticides %>% 
+  mutate(yieldpercol_kg = conv_unit(yieldpercol, "lbs", "kg"),
+         price_per_kg = priceperlb / conv_unit(1, "lbs", "kg"),
+         totalprod_kg = conv_unit(totalprod, "lbs", "kg")
+         )
+```
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

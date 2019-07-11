@@ -37,25 +37,25 @@ Honeyproduction from 1998-2012
 honeyyear <- honeyproduction %>%
   group_by(year) %>%
   summarise(YearTotal=sum(totalprod))
-ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000)) + 
+ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title="How much Honey did the USA produce between 1998 and 2012?")) + 
   geom_smooth(method = "lm") + 
   geom_line(color = "#f3a328", size = 2) +
   geom_point() +
   scale_x_continuous(breaks=seq(1998, 2012, 1)) +
-  ylab("production (in million lb)") +
+  ylab("Million kg Honey produced") +
   xlab("years") +
   theme_bw()+
   background_grid(major = "xy", minor="y", size.major = 0.2) 
 ```
 
 ```{r}
-ggplot(data=honeyproduction, aes(x=numcol, y=totalprod/100000)) + 
+ggplot(data=honeyproduction, aes(x=numcol, y=totalprod/100000, title = "titel")) + 
   geom_smooth(method = "lm") + 
   geom_line(color = "#f3a328", size = 2) +
   geom_point() +
   scale_x_continuous(breaks=seq(1998, 2012, 1)) +
   ylab("number of honeyproducing colonies per State") +
-  xlab("total production (in lbs)") +
+  xlab("total production (in kg)") +
   theme_bw()+
   background_grid(major = "xy", minor="y", size.major = 0.2)
 ```
@@ -77,6 +77,6 @@ ggplot(data=honeyperstate,
        geom_col(aes(fill=state),show.legend=F)+
        geom_text(aes(label=percentage))+
        coord_flip()+
-       labs(x="states in the USA",y="total honey produced (in million lb)",title="total honey produced by each state")  +
+       labs(x="states of the USA",y="total honey produced (in million kg)",title="In which state were the honeybees most diligent?")  +
        background_grid(major = "xy", minor="y", size.major = 0.2) 
 ```
