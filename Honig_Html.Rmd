@@ -24,6 +24,26 @@ theme_set(
 #colorbrewer palette YlOrBr
 ```
 
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+honeyproduction <- read.csv(file="honeyproduction.csv", header=TRUE, sep=",")
+
+state_honeyproduction <-  honeyproduction %>% 
+  group_by(state) %>% 
+  summarize(mean = mean(dt),
+            sum = sum(dt))
+state_honeyproduction <-  honeyproduction %>% 
+  group_by(state) %>% 
+  summarize(mean = mean(dt),
+            sum = sum(dt))
+
+honeyproduction <- honeyproduction %>% 
+  mutate(yieldpercol_kg = conv_unit(yieldpercol, "lbs", "kg"),
+         price_per_kg = priceperlb / conv_unit(1, "lbs", "kg")
+         )
+#nomissing values 
+#colSums(is.na(honeyproduction))
+```
 
 
 ```{r cars}
