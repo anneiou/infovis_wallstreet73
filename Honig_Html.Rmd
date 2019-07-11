@@ -25,21 +25,6 @@ theme_set(
 ```
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-honeyproduction <- read.csv(file="honeyproduction.csv", header=TRUE, sep=",")
-
-state_honeyproduction <-  honeyproduction %>% 
-  group_by(state) %>% 
-  summarize(mean = mean(dt),
-            sum = sum(dt))
-#damit lbs in kg konvertiert wird (klappt noch nicht)
-#honeyproduction %>% mutate(yieldpercol_kg = conv_unit(yieldpercol, "lbs", "kg"))
-
-#nomissing values 
-#colSums(is.na(honeyproduction))
-```
-
 
 ```{r cars}
 summary(honeyproduction)
