@@ -1,10 +1,10 @@
 ---
-title: "Storyboard"
+title: "A story of te US American honeybee"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
     theme: sandstone
-    logo: honigbiene.png
+    logo: www/honigbiene.png
     favicon: favicon.png
     runtime: shiny
 ---
@@ -21,9 +21,8 @@ library(dygraphs)
 library(flexdashboard)
 #colorbrewer palette YlOrBr
 ```
-
-#### Daten laden ---- 
-
+Bee interactive!
+Fly through the story and discover the story of the bees!
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
 	echo = FALSE,
@@ -53,7 +52,6 @@ pesticides <- pesticides %>%
          )
 ```
 
-#merge
 
 ```{r}
 # total_production <- merge(honeyproduction, pesticides, by=c("state", "numcol", "stocks", "price_per_kg", "prodvalue", "year", "yieldpercol_kg", "price_per_kg", "total_prod"))
@@ -70,7 +68,7 @@ total_production <- total_production[!is.na(total_production$Region), ]
 # beeimages
 bee_data <- read.csv(file="bee_data.csv", header=TRUE, sep=",")
 ```
-### Frame 1
+### The Problem of the Honeybee
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 selectInput("n_breaks", label = "Number of bins:",
             choices = c(10, 20, 35, 50), selected = 20)
@@ -93,11 +91,11 @@ renderPlot({
 ```
 
 
-### Frame 2
+### Bees - information beehind
 
 
 ```{r}
-#text
+#hier infos über die biene
 ```
 
 
