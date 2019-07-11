@@ -100,7 +100,7 @@ renderPlot({
 
 
 
-### Frame 3
+### Where did all the honey go?
 
 ```{r}
 honeyyear <- honeyproduction %>%
