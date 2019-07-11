@@ -32,11 +32,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-pesticides_clean <- na.omit(pesticides)
+pesticides_clean <- na.omit(total_production)
 
 pesticides_year <- pesticides_clean %>%
   group_by(year) %>%
-  summarise(production_year=sum(totalprod))
+  summarise(production_year=sum(totalprod_kg))
 
 pesticides_year2 <- pesticides_clean %>% 
   group_by(year) %>% 

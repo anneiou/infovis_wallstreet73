@@ -5,7 +5,7 @@ output:
     storyboard: true
     theme: sandstone
     logo: honigbiene.png
-    #favicon: favicon.png
+    favicon: favicon.png
     runtime: shiny
 ---
 
@@ -23,33 +23,54 @@ library(flexdashboard)
 ```
 
 #### Daten laden ---- 
-```{r data_Honeyproduction, include=FALSE}
-# Honeyproduction
+
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(
 	echo = FALSE,
 	message = FALSE,
 	warning = FALSE
 )
 honeyproduction <- read.csv(file="honeyproduction.csv", header=TRUE, sep=",")
+
+#Umrechnen von Pfund in Kilogramm
 honeyproduction <- honeyproduction %>% 
   mutate(yieldpercol_kg = conv_unit(yieldpercol, "lbs", "kg"),
-         price_per_kg = priceperlb / conv_unit(1, "lbs", "kg")
+         price_per_kg = priceperlb / conv_unit(1, "lbs", "kg"),
+         totalprod_kg = conv_unit(totalprod, "lbs", "kg")
          )
 #nomissing values 
 #colSums(is.na(honeyproduction))
 ```
 
-```{r data_peticides}
-# Pesticides
+```{r}
+#pesticides dataframe
+pesticides <- read.csv(file="vHoneyNeonic_v03.csv", header=TRUE, sep=",")
+#Umrechnen von Pfund in Kilogramm
+pesticides <- pesticides %>% 
+  mutate(yieldpercol_kg = conv_unit(yieldpercol, "lbs", "kg"),
+         price_per_kg = priceperlb / conv_unit(1, "lbs", "kg"),
+         totalprod_kg = conv_unit(totalprod, "lbs", "kg")
+         )
+```
+
+#merge
+
+```{r}
+# total_production <- merge(honeyproduction, pesticides, by=c("state", "numcol", "stocks", "price_per_kg", "prodvalue", "year", "yieldpercol_kg", "price_per_kg", "total_prod"))
+
+
+total_production <- bind_rows(honeyproduction, pesticides) 
+
+#remove duplicates by deleting missing N.A. row (region)
+total_production <- total_production[!is.na(total_production$Region), ]
+
 ```
 
 ```{r data_beeimages}
 # beeimages
+bee_data <- read.csv(file="bee_data.csv", header=TRUE, sep=",")
 ```
-
 ### Frame 1
-
-
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 selectInput("n_breaks", label = "Number of bins:",
             choices = c(10, 20, 35, 50), selected = 20)
@@ -59,8 +80,8 @@ sliderInput("bw_adjust", label = "Bandwidth adjustment:",
 
 ```
 
-Column {.sidebar}
------------------------------------------------------------------------
+#Column {.sidebar}
+#-----------------------------------------------------------------------
 ```{r}
 renderPlot({
   hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
@@ -76,7 +97,7 @@ renderPlot({
 
 
 ```{r}
-
+#text
 ```
 
 
@@ -121,4 +142,26 @@ ggplot(data=honeyperstate,
        coord_flip()+
        labs(x="states of the USA",y="total honey produced (in million kg)",title="In which state were the honeybees most diligent?")  +
        background_grid(major = "xy", minor="y", size.major = 0.2) 
+```
+
+
+### Frame 5
+
+```{r}
+pesticides_clean <- na.omit(total_production)
+
+pesticides_year <- pesticides_clean %>%
+  group_by(year) %>%
+  summarise(production_year=sum(totalprod_kg))
+
+pesticides_year2 <- pesticides_clean %>% 
+  group_by(year) %>% 
+  summarise(neonics_year=sum(nAllNeonic))
+
+pesticides_year_total <- merge(pesticides_year, pesticides_year2)
+
+ggplot(data=pesticides_year_total, aes(year)) +
+  geom_line(aes(y=production_year)) +
+  geom_line(aes(y=neonics_year)) +
+  theme_bw()
 ```
