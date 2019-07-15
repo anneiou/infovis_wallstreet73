@@ -89,7 +89,7 @@ ggplot(data=pesticides_year_total, aes(x = year)) +
   geom_point(aes(y = production_year, colour = "Honey")) + 
   geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) +
   scale_colour_manual(values = c("cyan", "magenta")) + 
-  labs(y = "Amount of honey produced in the US [million kg]", x = "Year", colour = "Parameter") + 
+  labs(y = "Amount of honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
   theme_bw()
 
 ```
