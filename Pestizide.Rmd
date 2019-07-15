@@ -13,12 +13,14 @@ library(knitr)
 library(cowplot)
 library(RColorBrewer)
 library(measurements)
+library(corrplot)
 
 pesticides <- read.csv(file="vHoneyNeonic_v03.csv", header=TRUE, sep=",")
 ```
 
 ```{r}
 #Umrechnen von Pfund in Kilogramm
+
 pesticides <- pesticides %>% 
   mutate(yieldpercol_kg = conv_unit(yieldpercol, "lbs", "kg"),
          price_per_kg = priceperlb / conv_unit(1, "lbs", "kg"),
@@ -36,29 +38,70 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-# Plot 1: Produktion <-> Pestizide
-pesticides_year <- pesticides %>%
+# Datensätze
+
+pesticides_year_production <- pesticides %>%
   group_by(year) %>%
   summarise(production_year=sum(totalprod_kg))
 
-pesticides_year2 <- pesticides %>% 
+pesticides_year_neonics <- pesticides %>% 
   na.omit(nAllNeonic) %>% 
   group_by(year) %>% 
   summarise(neonics_year=sum(nAllNeonic))
 
-pesticides_year_total <- merge(pesticides_year, pesticides_year2)
+pesticides_year_total <- merge(pesticides_year_production, pesticides_year_neonics)
 
-ggplot(data=pesticides_year_total, aes(year)) +
-  geom_line(aes(y=production_year)) +
-  geom_line(aes(y=neonics_year)) +
+pesticides_year_price <- pesticides %>% 
+  group_by(year) %>% 
+  summarise(priceperkg_year=sum(price_per_kg))
+```
+
+```{r}
+# Plot 1: Produktion
+
+ggplot(data=pesticides_year_total, aes(x=year, y=production_year)) +
+  geom_line() + 
+  geom_point() +
+  xlab("Year") +
+  scale_y_continuous(name="Amount of honey produced in the US [million kg]", breaks=c(60000000, 70000000, 80000000, 90000000, 100000000), labels=c("60", "70", "80", "90", "100")) +
+  theme_bw()
+  
+  
+```
+
+```{r}
+#Plot 2: Pestizide
+
+ggplot(data=pesticides_year_total, aes(x=year, y=neonics_year)) +
+  geom_line() + 
+  geom_point() +
+  xlab("Year") +
+  scale_y_continuous(name="Amount of neonic pesticides applied in the US [M kg]", breaks=c(0, 500000, 1000000, 1500000, 2000000, 2500000, 3000000), labels=c("0", "0,5", "1", "1,5", "2", "2,5", "3")) +
+  theme_bw()
+```
+```{r}
+#Plot 3: Produktion & Pestizide
+
+ggplot(data=pesticides_year_total, aes(x = year)) + 
+  geom_line(aes(y = production_year, colour = "Honey")) + 
+  geom_line(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
+  scale_y_continuous(breaks=c(0, 10000000, 20000000, 30000000, 40000000, 50000000, 60000000, 70000000, 80000000, 90000000, 100000000), labels=c("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"), sec.axis = sec_axis(~./30, name = "Amount of neonic pesticides applied in the US [million kg]", breaks=c(0, 500000, 1000000, 1500000, 2000000, 2500000, 3000000, 3500000), labels=c("0", "0,5", "1", "1,5", "2", "2,5", "3", "3,5"))) +
+  geom_point(aes(y = production_year, colour = "Honey")) + 
+  geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) +
+  scale_colour_manual(values = c("cyan", "magenta")) + 
+  labs(y = "Amount of honey produced in the US [million kg]", x = "Year", colour = "Parameter") + 
   theme_bw()
 
-labs <- labs <- c("1995","Second best","Third best","Average", "Average","Third Worst","Second Worst","Worst")
+```
 
-ggplot(data=pesticides_year_total) +
-  geom_point(aes(x=production_year, y=neonics_year)) +
-  facet_wrap(~year)
-  
+```{r}
+#Plot 4: Preisentwcklung
+
+ggplot(data=pesticides_year_price, aes(x=year, y=priceperkg_year)) +
+  geom_line() + 
+  geom_point() +
+  xlab("Year") +
+  theme_bw()
 ```
 
 
