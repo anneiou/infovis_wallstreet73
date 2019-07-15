@@ -22,8 +22,12 @@ pesticides <- read.csv(file="vHoneyNeonic_v03.csv", header=TRUE, sep=",")
 pesticides <- pesticides %>% 
   mutate(yieldpercol_kg = conv_unit(yieldpercol, "lbs", "kg"),
          price_per_kg = priceperlb / conv_unit(1, "lbs", "kg"),
-         totalprod_kg = conv_unit(totalprod, "lbs", "kg")
+         totalprod_kg = conv_unit(totalprod, "lbs", "kg"),
+         nAllNeonic_kg = conv_unit(nAllNeonic, "lbs", "kg")
          )
+
+x <- pesticides$nAllNeonic_kg
+pesticides1 <- pesticides %>% format(round(x, 2), nsmall = 2)
 ```
 
 
@@ -32,13 +36,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-pesticides_clean <- na.omit(total_production)
-
-pesticides_year <- pesticides_clean %>%
+# Plot 1: Produktion <-> Pestizide
+pesticides_year <- pesticides %>%
   group_by(year) %>%
   summarise(production_year=sum(totalprod_kg))
 
-pesticides_year2 <- pesticides_clean %>% 
+pesticides_year2 <- pesticides %>% 
+  na.omit(nAllNeonic) %>% 
   group_by(year) %>% 
   summarise(neonics_year=sum(nAllNeonic))
 
@@ -48,6 +52,13 @@ ggplot(data=pesticides_year_total, aes(year)) +
   geom_line(aes(y=production_year)) +
   geom_line(aes(y=neonics_year)) +
   theme_bw()
+
+labs <- labs <- c("1995","Second best","Third best","Average", "Average","Third Worst","Second Worst","Worst")
+
+ggplot(data=pesticides_year_total) +
+  geom_point(aes(x=production_year, y=neonics_year)) +
+  facet_wrap(~year)
+  
 ```
 
 
