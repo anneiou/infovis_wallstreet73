@@ -131,3 +131,122 @@ ggplot(data=pesticides_year_total, aes(year)) +
   theme_bw()
 ```
 
+
+
+
+
+
+##### hier wolte ich was ausprobieren
+
+```{r}
+library(plotly)
+library(quantmod)
+
+getSymbols("AAPL",src='yahoo')
+
+total_production_map <- total_production(Date=index(AAPL),coredata(AAPL))
+total_production_map <- tail(total_production, 30)
+total_production_map$ID <- seq.int(nrow(total_production_map))
+
+accumulate_by <- function(dat, var) {
+  var <- lazyeval::f_eval(var, dat)
+  lvls <- plotly:::getLevels(var)
+  dats <- lapply(seq_along(lvls), function(x) {
+    cbind(dat[var %in% lvls[seq(1, x)], ], frame = lvls[[x]])
+  })
+  dplyr::bind_rows(dats)
+}
+
+total_production_map <- total_production_map %>%
+  accumulate_by(~price_per_kg)
+
+p <- total_production_map %>%
+  plot_ly(
+    x = ~year, 
+    y = ~price_per_kg, 
+    frame = ~frame,
+    type = 'scatter', 
+    mode = 'lines', 
+    fill = 'tozeroy', 
+    fillcolor='rgba(114, 186, 59, 0.5)',
+    line = list(color = 'rgb(114, 186, 59)'),
+    text = ~paste("Year: ", year, "<br>Price per kg in $", price_per_kg), 
+    hoverinfo = 'text'
+  ) %>%
+  layout(
+    title = "Price year 1992-2017",
+    yaxis = list(
+      title = "Price", 
+      range = c(1992,2017), 
+      zeroline = F,
+      tickprefix = "$"
+    ),
+    xaxis = list(
+      title = "Year", 
+      range = c(1992,2017), 
+      zeroline = F, 
+      showgrid = F
+    )
+  ) %>% 
+  animation_opts(
+    frame = 100, 
+    transition = 0, 
+    redraw = FALSE
+  ) %>%
+  animation_slider(
+    currentvalue = list(
+      prefix = "Year"
+    )
+  )
+
+# Create a shareable link to your chart
+# Set up API credentials: https://plot.ly/r/getting-started
+#chart_link = api_create(p, filename="cumAnimations-filled-area")
+#chart_link
+```
+
+
+```{r}
+accumulate_by <- function(dat, var) {
+  var <- lazyeval::f_eval(var, dat)
+  lvls <- plotly:::getLevels(var)
+  dats <- lapply(seq_along(lvls), function(x) {
+    cbind(dat[var %in% lvls[seq(1, x)], ], frame = lvls[[x]])
+  })
+  dplyr::bind_rows(dats)
+}
+
+
+plotlyplot1 <- total_production %>%
+  plot_ly(
+    x = ~year, 
+    y = ~price_per_kg,
+    split = ~state,
+    frame = ~frame, 
+    type = 'scatter',
+    mode = 'lines', 
+    line = list(simplyfy = F)
+  ) %>% 
+  layout(
+    xaxis = list(
+      title = "Year",
+      zeroline = F
+    ),
+    yaxis = list(
+      title = "Honeyprice per kg",
+      zeroline = F
+    )
+  ) %>% 
+  animation_opts(
+    frame = 100, 
+    transition = 0, 
+    redraw = FALSE
+  ) %>%
+  animation_slider(
+    hide = T
+    ) %>%
+  animation_button(
+    x = 1, xanchor = "right", y = 0, yanchor = "bottom"
+  )
+```
+

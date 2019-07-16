@@ -11,7 +11,10 @@ output:
 
     
 ```{r Libraries, message=FALSE, warning=FALSE, paged.print=FALSE}
-library(tidyverse)
+library(tidyverse, quietly = TRUE, warn.conflicts = FALSE) #because...duh
+library(readxl)
+library(viridis) #awesome color-blind friendly palette
+library(janitor) #clean data
 library(ggplot2)
 library(knitr)
 library(cowplot)
@@ -19,6 +22,7 @@ library(RColorBrewer)
 library(measurements)
 library(dygraphs)
 library(flexdashboard)
+library(plotly)
 #colorbrewer palette YlOrBr
 ```
 Bee interactive!
@@ -62,8 +66,63 @@ total_production <- bind_rows(honeyproduction, pesticides)
 
 #remove duplicates by deleting missing N.A. row (region)
 total_production <- total_production[!is.na(total_production$Region), ]
+write.csv(total_production,"C:\\Users\\Anne\\Documents\\infovis_wallstreet73\\total_production.csv", row.names = TRUE)
+
+summary(total_production)
+```
+```{r}
+#region
+sumregion_year <- total_production %>%
+                group_by(Region, year, add = TRUE) %>%
+  summarise(numcol = sum(numcol),
+            stocks = sum(stocks),
+            yieldpercol_kg = sum(yieldpercol_kg),
+            #price_per_kg = sum(price_per_kg),
+            #nAllNeonic_kg = sum(nAllNeonic_kg),
+            totalprod_kg = sum(totalprod_kg)
+            )
+
+
+sumregion_total <- total_production %>%
+                group_by(Region, add = TRUE) %>%
+  summarise(numcol = sum(numcol),
+            stocks = sum(stocks),
+            yieldpercol_kg = sum(yieldpercol_kg),
+            #price_per_kg = sum(price_per_kg),
+            #nAllNeonic_kg = sum(nAllNeonic_kg),
+            totalprod_kg = sum(totalprod_kg)
+            )
+
+meanregion_year <- total_production %>%
+                group_by(Region, year, add = TRUE) %>%
+  summarise(numcol = mean(numcol),
+            stocks = mean(stocks),
+            yieldpercol_kg = mean(yieldpercol_kg),
+            price_per_kg = mean(price_per_kg),
+            #nAllNeonic_kg = mean(nAllNeonic_kg),
+            totalprod_kg = mean(totalprod_kg)
+            )
+
+meanregion_total <- total_production %>%
+                group_by(Region, add = TRUE) %>%
+  summarise(numcol = mean(numcol),
+            stocks = mean(stocks),
+            yieldpercol_kg = mean(yieldpercol_kg),
+            price_per_kg = mean(price_per_kg),
+            #nAllNeonic_kg = mean(nAllNeonic_kg),
+            totalprod_kg = mean(totalprod_kg)
+            )
+
+
+summary(sumregion_year)
+summary(meanregion_year)
+
+
+data2017 <-  sumregion_year[  sumregion_year$year=="2017" , ]
 
 ```
+
+
 
 ```{r data_beeimages}
 # beeimages
@@ -78,6 +137,23 @@ sliderInput("bw_adjust", label = "Bandwidth adjustment:",
             min = 0.2, max = 2, value = 1, step = 0.2)
 
 ```
+
+```{r}
+#Data images
+![Stock overview](\infovis_wallstreet73\www\stocks2017.png)
+![colonie overview](\infovis_wallstreet73\www\colonies2017.png)
+![honey overview](\infovis_wallstreet73\www\totalhoney2017.png)
+![price overview](\infovis_wallstreet73\www\honeyprice2017.png)
+
+
+```
+
+
+![Stock overview](\www\stocks2017.png)
+![colonie overview](\www\colonies2017.png)
+![honey overview](\www\totalhoney2017.png)
+![price overview](\www\honeyprice2017.png)
+
 
 #Column {.sidebar}
 #-----------------------------------------------------------------------
@@ -94,32 +170,33 @@ renderPlot({
 
 ### Bees - information beehind
 
-
+![alt](C:\Users\Anne\Documents\infovis_wallstreet73\www\wabe.png)
 ```{r}
 #hier infos über die biene
+ 
 ```
 
 
 
 ### Where did all the honey go?
 
-```{r}
-honeyyear <- honeyproduction %>%
+```{r echo=FALSE}
+honeyyear <- total_production %>%
   group_by(year) %>%
   summarise(YearTotal=sum(totalprod))
-ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title="How much Honey did the USA produce between 1998 and 2012?")) + 
+ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title = "How much honey did the USA produce between xx and xx?")) + 
   geom_smooth(method = "lm") + 
   geom_line(color = "#f3a328", size = 2) +
   geom_point() +
-  scale_x_continuous(breaks=seq(1998, 2012, 1)) +
-  ylab("Million kg Honey produced") +
+  scale_x_continuous(breaks=seq(1991, 2017, 3)) +
+  ylab("Million kg Honey produced") + 
   xlab("years") +
   theme_bw()+
   background_grid(major = "xy", minor="y", size.major = 0.2) 
 ```
 
 
-### Frame 4
+### textbox
 
 
 ```{r}
@@ -144,9 +221,9 @@ ggplot(data=honeyperstate,
 ```
 
 
-### Frame 5
+### A dramatic turn of... honey?
 
-```{r}
+```{r paged.print=TRUE}
 pesticides_year_production <- pesticides %>%
   group_by(year) %>%
   summarise(production_year=sum(totalprod_kg))
@@ -158,13 +235,107 @@ pesticides_year_neonics <- pesticides %>%
 
 pesticides_year_total <- merge(pesticides_year_production, pesticides_year_neonics)
 
-ggplot(data=pesticides_year_total, aes(x = year)) + 
-  geom_line(aes(y = production_year, colour = "Honey")) + 
-  geom_line(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
-  scale_y_continuous(breaks=c(0, 10000000, 20000000, 30000000, 40000000, 50000000, 60000000, 70000000, 80000000, 90000000, 100000000), labels=c("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"), sec.axis = sec_axis(~./30, name = "Amount of neonic pesticides applied in the US [million kg]", breaks=c(0, 500000, 1000000, 1500000, 2000000, 2500000, 3000000, 3500000), labels=c("0", "0,5", "1", "1,5", "2", "2,5", "3", "3,5"))) +
+ggplot(data=pesticides_year_total,aes(x = year, title = "Year 2000 - What happened to our honey?")
+       ) + 
+             geom_line(aes(y = production_year, colour = "Honey")) + 
+             geom_line(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
+             scale_y_continuous(breaks=c(
+                                          0, 10000000, 20000000, 30000000, 40000000, 50000000,
+                                          60000000, 70000000, 80000000, 90000000, 100000000
+                                        ),
+                                labels=c("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"
+                                         ),
+                                sec.axis = sec_axis(~./30,
+                                                    name = "Amount of neonic pesticides applied in the US [million kg]",
+                                                    breaks=c(0, 500000, 1000000, 1500000, 2000000, 2500000, 3000000, 3500000),
+                                                    labels=c("0", "0,5", "1", "1,5", "2", "2,5", "3", "3,5")
+                                                    )
+                                ) +
   geom_point(aes(y = production_year, colour = "Honey")) + 
   geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) +
   scale_colour_manual(values = c("cyan", "magenta")) + 
   labs(y = "Amount of honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
   theme_bw()
 ```
+
+```{r}
+#https://plot.ly/r/map-subplots-and-small-multiples/ für die pesticides per state vieleicht? :)
+```
+
+### Honey honey honey, must be funny, in a rich man's world!
+
+```{r}
+#priceperkg
+```
+
+
+### colonies
+
+```{r}
+total_production %>% group_by(year) %>% 
+  summarize_each(funs(mean)) %>% 
+  ggplot() +
+  geom_point(aes(x = year, y = totalprod_kg, size = numcol, fill = yieldpercol_kg), shape = 21, color = "darkgray") +
+  geom_smooth(aes(x = year, y = totalprod_kg), span = 2, se = FALSE, color = "gray", linetype = "dotted") +
+  scale_fill_viridis(direction = -1, option = "A", name = "Yield per Colony\n(kg)") +
+  scale_y_continuous(limits = c(3000000, 5500000), breaks = c(3000000, 3500000, 4000000, 4500000, 5000000, 5500000), labels = c(3.0, 3.5, 4.0, 4.5, 5.0, 5.5)) +
+  scale_x_continuous(limits = c(1992, 2017), breaks = c(1992, 1997, 2002, 2007, 2012, 2017)) +
+  guides(size = guide_legend("Honey Producing\nColonies"), limits = c(55000, 65000)) +
+  theme_minimal() +
+  labs(title = "Total U.S. Honey Production Decreases", 
+       x = "Year", 
+       y = "US Honey Production (millions of kg)")
+
+#save
+
+ggsave("honey.png", last_plot(), height = 4, width = 6, units = "in", dpi = 600)
+#default is last plot, but can name objects here
+```
+
+### buzy bees
+```{r}
+ggplot(data=total_production, aes(x=numcol, y=totalprod_kg/100000, title = "titel")) + 
+  geom_smooth(method = "lm") + 
+  geom_line(color = "#f3a328", size = 2) +
+  geom_point() +
+  scale_x_continuous(breaks=seq(2000, 520000, 1000)) +
+  ylab("number of honeyproducing colonies per State") +
+  xlab("total production (in kg)") +
+  theme_bw()+
+  background_grid(major = "xy", minor="y", size.major = 0.2)
+```
+
+
+### plot
+
+
+
+
+
+```{r}
+# production per region
+total_production %>% group_by(region)
+
+dens <- with(diamonds, tapply(price, INDEX = cut, density))
+df <- data.frame(
+  x = unlist(lapply(dens, "[[", "x")),
+  y = unlist(lapply(dens, "[[", "y")),
+  cut = rep(names(dens), each = length(dens[[1]]$x))
+)
+
+p <- plot_ly(df, x = ~x, y = ~y, color = ~cut) %>%
+  add_lines()
+
+```
+
+
+### region
+
+
+```{r}
+ggplot(data = meanregion_year, aes(x = year, y = price_per_kg, color = Region)) +  
+  scale_x_continuous(breaks=seq(1991, 2017, 5))+
+  geom_line(aes(group = Region)) + geom_point()
+
+```
+
