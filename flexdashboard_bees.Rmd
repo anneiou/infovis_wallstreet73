@@ -1,5 +1,5 @@
 ---
-title: "A story of te US American honeybee"
+title: "A story of the US American honeybee"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
@@ -23,6 +23,7 @@ library(measurements)
 library(dygraphs)
 library(flexdashboard)
 library(plotly)
+library(shiny)
 #colorbrewer palette YlOrBr
 ```
 Bee interactive!
@@ -68,7 +69,7 @@ total_production <- bind_rows(honeyproduction, pesticides)
 total_production <- total_production[!is.na(total_production$Region), ]
 write.csv(total_production,"C:\\Users\\Anne\\Documents\\infovis_wallstreet73\\total_production.csv", row.names = TRUE)
 
-summary(total_production)
+
 ```
 ```{r}
 #region
@@ -114,20 +115,23 @@ meanregion_total <- total_production %>%
             )
 
 
-summary(sumregion_year)
-summary(meanregion_year)
-
-
 data2017 <-  sumregion_year[  sumregion_year$year=="2017" , ]
 
 ```
-
 
 
 ```{r data_beeimages}
 # beeimages
 bee_data <- read.csv(file="bee_data.csv", header=TRUE, sep=",")
 ```
+
+### This Data 
+```{r}
+summary(total_production)
+```
+
+
+
 ### The Problem of the Honeybee
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 selectInput("n_breaks", label = "Number of bins:",
@@ -138,25 +142,12 @@ sliderInput("bw_adjust", label = "Bandwidth adjustment:",
 
 ```
 
-```{r}
-#Data images
-![Stock overview](\infovis_wallstreet73\www\stocks2017.png)
-![colonie overview](\infovis_wallstreet73\www\colonies2017.png)
-![honey overview](\infovis_wallstreet73\www\totalhoney2017.png)
-![price overview](\infovis_wallstreet73\www\honeyprice2017.png)
-
-
-```
-
-
 ![Stock overview](\www\stocks2017.png)
 ![colonie overview](\www\colonies2017.png)
 ![honey overview](\www\totalhoney2017.png)
 ![price overview](\www\honeyprice2017.png)
 
 
-#Column {.sidebar}
-#-----------------------------------------------------------------------
 ```{r}
 renderPlot({
   hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
@@ -314,7 +305,7 @@ ggplot(data=total_production, aes(x=numcol, y=totalprod_kg/100000, title = "tite
 
 ```{r}
 # production per region
-total_production %>% group_by(region)
+total_production %>% group_by(Region)
 
 dens <- with(diamonds, tapply(price, INDEX = cut, density))
 df <- data.frame(
@@ -337,5 +328,29 @@ ggplot(data = meanregion_year, aes(x = year, y = price_per_kg, color = Region)) 
   scale_x_continuous(breaks=seq(1991, 2017, 5))+
   geom_line(aes(group = Region)) + geom_point()
 
+```
+
+### region interactive
+```{r}
+checkboxGroupInput(inputId = "checkGroup", 
+                   label = "Region",
+                   choiceNames = c("Northeast",
+                                  "Midwest",
+                                  "West",
+                                  "South"),
+                   choiceValues = c("Northeast",
+                                  "Midwest",
+                                  "West",
+                                  "South")
+                  )
+
+renderPlot({
+  
+  ggplot(data = meanregion_year, aes(x = year, y = price_per_kg, color = Region)) +  
+  scale_x_continuous(breaks=seq(1991, 2017, 5)) +
+  geom_line(aes(group = Region)) + geom_point()
+  
+  
+})
 ```
 
