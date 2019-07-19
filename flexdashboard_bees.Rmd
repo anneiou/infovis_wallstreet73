@@ -24,6 +24,8 @@ library(dygraphs)
 library(flexdashboard)
 library(plotly)
 library(shiny)
+library(psych)
+library(DT)
 #colorbrewer palette YlOrBr
 ```
 Bee interactive!
@@ -354,3 +356,23 @@ renderPlot({
 })
 ```
 
+### Neonic Pesticides 
+
+```{r}
+datatable(pesticides_year_total)
+```
+
+***
+<h2>Neonicotinoids</h2>
+<br>
+<h4>Extract from "Neonicotinoid" on Wikipedia</h4>
+
+"Neonicotinoids (sometimes shortened to neonics /ˈniːoʊnɪks/) are a class of neuro-active insecticides chemically similar to nicotine.[...] <br>
+Imidacloprid is the most widely used insecticide in the world.[...] <br>
+Most academic and governmental bodies agree that neonicotinoids have had a negative influence on bee populations." <br><br>
+
+In a 2013, the European Food Safety Authority (EFSA) has been assigned by the European Union to conduct scientific research to the impact of neonicotinoids on honeybees. The studies findings stated that "neonicotinoids pose an unacceptably high risk to bees" and that previous research commissioned by insecticide manufacturers contained inexplicable data gaps. In response, the use of certain neonicotinoids has been restriced and tightend up over the years. 
+In 2014, the US government under Barack Obama issued a blanket ban against the use of neonicotinoids on National Wildlife Refuges.
+In 2018, the Trump administration reversed this decision.
+
+The data shows a slight increase in use of neonic pesticides since 1994 and a strong rise starting in the early 2000s. At that time, besides imidacloprid, two other neonicotinoids, clothianidin and thiamethoxam, entered the market. After that point the amount of neonics applied rises drastically and only finally reaches a turning point in 2014, when neonicotinoids got restriced, and decreases by over 80%.  
