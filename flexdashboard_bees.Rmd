@@ -144,10 +144,10 @@ sliderInput("bw_adjust", label = "Bandwidth adjustment:",
 
 ```
 
-![Stock overview](\www\stocks2017.png)
-![colonie overview](\www\colonies2017.png)
-![honey overview](\www\totalhoney2017.png)
-![price overview](\www\honeyprice2017.png)
+![Stock overview](www/stocks2017.png)
+![colonie overview](www/colonies2017.png)
+![honey overview](www/totalhoney2017.png)
+![price overview](www/honeyprice2017.png)
 
 
 ```{r}
@@ -236,16 +236,20 @@ ggplot(data=pesticides_year_total,aes(x = year, title = "Year 2000 - What happen
                                           0, 10000000, 20000000, 30000000, 40000000, 50000000,
                                           60000000, 70000000, 80000000, 90000000, 100000000
                                         ),
-                                labels=c("0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"
+                                labels=c("0", "10", "20", "30", "40", "50", 
+                                         "60", "70", "80", "90", "100"
                                          ),
                                 sec.axis = sec_axis(~./30,
-                                                    name = "Amount of neonic pesticides applied in the US [million kg]",
-                                                    breaks=c(0, 500000, 1000000, 1500000, 2000000, 2500000, 3000000, 3500000),
-                                                    labels=c("0", "0,5", "1", "1,5", "2", "2,5", "3", "3,5")
+                                                    name = "Amount of neonic pesticides 
+                                                    applied in the US [million kg]",
+                                                    breaks=c(0, 500000, 1000000, 1500000,
+                                                             2000000, 2500000, 3000000, 3500000),
+                                                    labels=c("0", "0,5", "1", "1,5", 
+                                                             "2", "2,5", "3", "3,5")
                                                     )
                                 ) +
   geom_point(aes(y = production_year, colour = "Honey")) + 
-  geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) +
+  geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
   scale_colour_manual(values = c("cyan", "magenta")) + 
   labs(y = "Amount of honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
   theme_bw()
@@ -291,9 +295,10 @@ ggplot(data=total_production, aes(x=numcol, y=totalprod_kg/100000, title = "tite
   geom_smooth(method = "lm") + 
   geom_line(color = "#f3a328", size = 2) +
   geom_point() +
-  scale_x_continuous(breaks=seq(2000, 520000, 1000)) +
-  ylab("number of honeyproducing colonies per State") +
-  xlab("total production (in kg)") +
+  scale_x_continuous(breaks=c(0, 100000, 200000, 300000, 400000, 500000, 600000),
+                     labels=c("0", "10", "20", "30", "40", "50", "60")) +
+  ylab("total production (in M kg)") +
+  xlab("number of honeyproducing colonies per State [in thousand]") +
   theme_bw()+
   background_grid(major = "xy", minor="y", size.major = 0.2)
 ```
