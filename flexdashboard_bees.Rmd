@@ -2,6 +2,7 @@
 title: "A story of the US American honeybee"
 output: 
   flexdashboard::flex_dashboard:
+    vertical_layout: fill
     storyboard: true
     theme: sandstone
     logo: www/honigbiene.png
@@ -26,6 +27,9 @@ library(plotly)
 library(shiny)
 library(psych)
 library(DT)
+library(rworldmap)
+library(kableExtra)
+
 #colorbrewer palette YlOrBr
 ```
 Bee interactive!
@@ -127,12 +131,19 @@ data2017 <-  sumregion_year[  sumregion_year$year=="2017" , ]
 bee_data <- read.csv(file="bee_data.csv", header=TRUE, sep=",")
 ```
 
-### This Data 
+
+
+### This Data
 ```{r}
-summary(total_production)
+#summary(total_production)
 ```
 
+```{r}
+#here goes text
+```
 
+Column {data-width=350}
+-----------------------------------------------------------------------
 
 ### The Problem of the Honeybee
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -380,4 +391,38 @@ In a 2013, the European Food Safety Authority (EFSA) has been assigned by the Eu
 In 2014, the US government under Barack Obama issued a blanket ban against the use of neonicotinoids on National Wildlife Refuges.
 In 2018, the Trump administration reversed this decision.
 
-The data shows a slight increase in use of neonic pesticides since 1994 and a strong rise starting in the early 2000s. At that time, besides imidacloprid, two other neonicotinoids, clothianidin and thiamethoxam, entered the market. After that point the amount of neonics applied rises drastically and only finally reaches a turning point in 2014, when neonicotinoids got restriced, and decreases by over 80%.  
+The data shows a slight increase in use of neonic pesticides since 1994 and a strong rise starting in the early 2000s. At that time, besides imidacloprid, two other neonicotinoids, clothianidin and thiamethoxam, entered the market. After that point the amount of neonics applied rises drastically and only finally reaches a turning point in 2014, when neonicotinoids got restriced, and decreases by over 80%. 
+
+
+
+
+
+### map 
+```{r}
+honeystates <- as.data.frame(table(total_production$StateName))
+
+colnames(honeystates) <- c("StateName", mean="price_per_kg")
+
+matched <- joinCountryData2Map(honeystates, joinCode="NAME", nameJoinColumn = "StateName")
+
+mapCountryData(matched,
+               nameColumnToPlot="price_per_kg",
+               mapTitle="Price mean per state",
+               mapRegion= "North America",
+               catMethod = "pretty",
+               colourPalette = "Greens")
+```
+
+
+```{r}
+scatter_ggplot = 
+  meanregion_year %>%
+  ggplot(aes(x = year, y = yieldpercol_kg, color = price_per_kg, fill= Region)) +
+  geom_point(alpha = 0.88) +
+  scale_color_viridis() +
+  coord_cartesian() +
+  theme_classic()
+
+ggplotly(scatter_ggplot)
+```
+
