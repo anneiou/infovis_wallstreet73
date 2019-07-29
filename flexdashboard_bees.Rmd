@@ -159,14 +159,13 @@ Column {data-width=350}
 -----------------------------------------------------------------------
 
 ### The Problem of the Honeybee
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-selectInput("n_breaks", label = "Number of bins:",
-            choices = c(10, 20, 35, 50), selected = 20)
 
-sliderInput("bw_adjust", label = "Bandwidth adjustment:",
-            min = 0.2, max = 2, value = 1, step = 0.2)
-
+```{r}
+#hier eine plot grafik
 ```
+
+
+### Bees - information beehind
 
 ![Stock overview](www/stocks2017.png)
 ![colonie overview](www/colonies2017.png)
@@ -174,20 +173,9 @@ sliderInput("bw_adjust", label = "Bandwidth adjustment:",
 ![price overview](www/honeyprice2017.png)
 
 
-```{r}
-renderPlot({
-  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
-       xlab = "Duration (minutes)", main = "Geyser Eruption Duration")
-  
-  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
-  lines(dens, col = "blue")
-})
-```
 
 
-### Bees - information beehind
-
-![alt](C:\Users\Anne\Documents\infovis_wallstreet73\www\wabe.png)
+#![alt](www/wabe.png)
 ```{r}
 #hier infos über die biene
  
@@ -291,7 +279,33 @@ ggplot(data=pesticides_year_total,aes(x = year, title = "Year 2000 - What happen
 ### Honey honey honey, must be funny, in a rich man's world!
 
 ```{r}
-#priceperkg
+ggplot(data = meanregion_year, aes(x = year, y = price_per_kg, color = Region)) +  
+  scale_x_continuous(breaks=seq(1991, 2017, 5))+
+  geom_line(aes(group = Region)) + geom_point()
+
+```
+
+```{r}
+checkboxGroupInput(inputId = "checkGroup", 
+                   label = "Region",
+                   choiceNames = c("Northeast",
+                                  "Midwest",
+                                  "West",
+                                  "South"),
+                   choiceValues = c("Northeast",
+                                  "Midwest",
+                                  "West",
+                                  "South")
+                  )
+
+renderPlot({
+  
+  ggplot(data = meanregion_year, aes(x = year, y = price_per_kg, color = Region)) +  
+  scale_x_continuous(breaks=seq(1991, 2017, 5)) +
+  geom_line(aes(group = Region)) + geom_point()
+  
+  
+})
 ```
 
 
@@ -319,24 +333,6 @@ ggsave("honey.png", last_plot(), height = 4, width = 6, units = "in", dpi = 600)
 ```
 
 ### buzy bees
-```{r}
-# ggplot(data=total_production, aes(x=numcol, y=totalprod_kg/100000, title = "titel")) + 
-#   geom_smooth(method = "lm") + 
-#   geom_line(color = "#f3a328", size = 2) +
-#   geom_point() +
-#   scale_x_continuous(breaks=c(0, 100000, 200000, 300000, 400000, 500000, 600000),
-#                      labels=c("0", "10", "20", "30", "40", "50", "60")) +
-#   ylab("total production (in M kg)") +
-#   xlab("number of honeyproducing colonies per State [in thousand]") +
-#   theme_bw()+
-#   background_grid(major = "xy", minor="y", size.major = 0.2)
-```
-
-
-### plot
-
-
-
 
 
 ```{r}
@@ -356,39 +352,6 @@ p <- plot_ly(df, x = ~x, y = ~y, color = ~cut) %>%
 ```
 
 
-### region
-
-
-```{r}
-ggplot(data = meanregion_year, aes(x = year, y = price_per_kg, color = Region)) +  
-  scale_x_continuous(breaks=seq(1991, 2017, 5))+
-  geom_line(aes(group = Region)) + geom_point()
-
-```
-
-### region interactive
-```{r}
-checkboxGroupInput(inputId = "checkGroup", 
-                   label = "Region",
-                   choiceNames = c("Northeast",
-                                  "Midwest",
-                                  "West",
-                                  "South"),
-                   choiceValues = c("Northeast",
-                                  "Midwest",
-                                  "West",
-                                  "South")
-                  )
-
-renderPlot({
-  
-  ggplot(data = meanregion_year, aes(x = year, y = price_per_kg, color = Region)) +  
-  scale_x_continuous(breaks=seq(1991, 2017, 5)) +
-  geom_line(aes(group = Region)) + geom_point()
-  
-  
-})
-```
 
 ### Neonic Pesticides 
 
@@ -472,6 +435,7 @@ scatter_ggplot =
 
 ggplotly(scatter_ggplot)
 ```
+
 ###
 
 ```{r}
@@ -588,16 +552,6 @@ p
 
 
 ### Honey Bee Data (Images)
-```{r}
-ggplot(data = bee_data) +
-  aes(x = health, y = subspecies) +
-  geom_tile() +
-  labs(title = "How healthy were the bees?",
-    x = "health status",
-    y = "What type subspecies was it?",
-    subtitle = "healtstatus of the several bee subspecies") +
-  theme_minimal()
-```
 
 
 ```{r}
@@ -645,3 +599,18 @@ What does it mean?
   \end{itemize}
   \vfill \null
 \end{multicols}
+
+```{r}
+ggplot(data = bee_data) +
+  aes(x = health, y = subspecies) +
+  geom_tile() +
+  labs(title = "How healthy were the bees?",
+    x = "health status",
+    y = "What type subspecies was it?",
+    subtitle = "healtstatus of the several bee subspecies") +
+  theme_minimal()
+```
+
+
+### Impressum & Quellen nicht vergessen
+
