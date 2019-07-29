@@ -29,6 +29,7 @@ library(psych)
 library(DT)
 library(rworldmap)
 library(kableExtra)
+library(gapminder)
 
 #colorbrewer palette YlOrBr
 ```
@@ -120,6 +121,26 @@ meanregion_total <- total_production %>%
             totalprod_kg = mean(totalprod_kg)
             )
 
+pesticideregion_total <- total_production %>%
+                group_by(Region, year, add = TRUE) %>%
+  summarise(nAllNeonic_kg = mean(nAllNeonic_kg, na.rm = TRUE),
+            nAllNeonic_kg = sum(nAllNeonic_kg)
+            )
+
+pesticide_total <- total_production %>%
+                group_by(Region, #year,
+                         add = TRUE) %>%
+  summarise(AllNeonic_kg = sum(nAllNeonic_kg, na.rm = TRUE)
+            )
+
+sumstate_total <- total_production %>%
+                group_by(StateName, add = TRUE) %>%
+  summarise(numcol = sum(numcol),
+            stocks = sum(stocks),
+            yieldpercol_kg = sum(yieldpercol_kg),
+            price_per_kg = sum(price_per_kg),
+            totalprod_kg = sum(totalprod_kg)
+            )
 
 data2017 <-  sumregion_year[  sumregion_year$year=="2017" , ]
 
@@ -129,18 +150,10 @@ data2017 <-  sumregion_year[  sumregion_year$year=="2017" , ]
 ```{r data_beeimages}
 # beeimages
 bee_data <- read.csv(file="bee_data.csv", header=TRUE, sep=",")
+
+summary(bee_data)
 ```
 
-
-
-### This Data
-```{r}
-#summary(total_production)
-```
-
-```{r}
-#here goes text
-```
 
 Column {data-width=350}
 -----------------------------------------------------------------------
@@ -266,6 +279,11 @@ ggplot(data=pesticides_year_total,aes(x = year, title = "Year 2000 - What happen
   theme_bw()
 ```
 
+![regionalpesticides2016](www/regionpesticides.png)
+
+![totalpesticides](www/pesticides_total.png)
+
+
 ```{r}
 #https://plot.ly/r/map-subplots-and-small-multiples/ für die pesticides per state vieleicht? :)
 ```
@@ -302,16 +320,16 @@ ggsave("honey.png", last_plot(), height = 4, width = 6, units = "in", dpi = 600)
 
 ### buzy bees
 ```{r}
-ggplot(data=total_production, aes(x=numcol, y=totalprod_kg/100000, title = "titel")) + 
-  geom_smooth(method = "lm") + 
-  geom_line(color = "#f3a328", size = 2) +
-  geom_point() +
-  scale_x_continuous(breaks=c(0, 100000, 200000, 300000, 400000, 500000, 600000),
-                     labels=c("0", "10", "20", "30", "40", "50", "60")) +
-  ylab("total production (in M kg)") +
-  xlab("number of honeyproducing colonies per State [in thousand]") +
-  theme_bw()+
-  background_grid(major = "xy", minor="y", size.major = 0.2)
+# ggplot(data=total_production, aes(x=numcol, y=totalprod_kg/100000, title = "titel")) + 
+#   geom_smooth(method = "lm") + 
+#   geom_line(color = "#f3a328", size = 2) +
+#   geom_point() +
+#   scale_x_continuous(breaks=c(0, 100000, 200000, 300000, 400000, 500000, 600000),
+#                      labels=c("0", "10", "20", "30", "40", "50", "60")) +
+#   ylab("total production (in M kg)") +
+#   xlab("number of honeyproducing colonies per State [in thousand]") +
+#   theme_bw()+
+#   background_grid(major = "xy", minor="y", size.major = 0.2)
 ```
 
 
@@ -413,6 +431,35 @@ mapCountryData(matched,
                colourPalette = "Greens")
 ```
 
+```{r}
+#https://plotly-r.com/maps.html 
+library(geojsonio)
+library(leafpop)
+tiles <- geojson_read("www/tiles.topo.json", what = "sp")
+tiles_sf <- st_as_sf(tiles)
+plot_ly(tiles_sf, split = ~StateName)
+```
+
+```{r}
+density <- total_production[, "stocks"] / total_production[, "StateName"]
+
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  lakecolor = toRGB('white')
+)
+
+plot_geo() %>%
+  add_trace(
+    z = ~stocks, text = StateName, span = I(0),
+    locations = StateName, locationmode = 'USA-states'
+  ) %>%
+  layout(geo = g)
+```
+
+
+
+###
 
 ```{r}
 scatter_ggplot = 
@@ -425,4 +472,176 @@ scatter_ggplot =
 
 ggplotly(scatter_ggplot)
 ```
+###
 
+```{r}
+base <- total_production %>%
+  plot_ly(x = ~price_per_kg, y = ~nAllNeonic_kg/10000, size = ~yieldpercol_kg, 
+          text = ~Region, hoverinfo = "text") %>%
+  layout(xaxis = list(type = "log"))
+
+base %>%
+  add_markers(color = ~Region, frame = ~year, ids = ~nAllNeonic_kg) %>%
+  animation_opts(1000, easing = "elastic", redraw = FALSE) %>%
+  animation_button(
+    x = 1, xanchor = "right", y = 0, yanchor = "bottom"
+  ) %>%
+  animation_slider(
+    currentvalue = list(prefix = "YEAR ", font = list(color="red"))
+  )
+```
+
+
+```{r}
+# region_yield <- with(total_production, tapply(yieldpercol_kg, INDEX = Region, mean))
+# total_production$Region <- factor(
+#   total_production$Region, levels = names(sort(region_yield))
+# )
+# 
+# region_yield %>%
+#   add_markers(data = total_production, frame = ~Region) %>%
+#   hide_legend() %>%
+#   animation_opts(frame = 1000, transition = 0, redraw = FALSE)
+```
+
+### 
+
+```{r}
+
+beeregion <- total_production %>%
+  plot_ly(
+    x = ~price_per_kg, 
+    y = ~mean,
+    split = ~Region,
+    frame = ~year, 
+    type = 'scatter',
+    mode = 'lines', 
+    line = list(simplyfy = F)
+  ) %>% 
+  layout(
+    xaxis = list(
+      title = "Date",
+      zeroline = F
+    ),
+    yaxis = list(
+      title = "Median",
+      zeroline = F
+    )
+  ) %>% 
+  animation_opts(
+    frame = 100, 
+    transition = 0, 
+    redraw = FALSE
+  ) %>%
+  animation_slider(
+    hide = T
+    ) %>%
+  animation_button(
+    x = 1, xanchor = "right", y = 0, yanchor = "bottom"
+  )
+
+```
+
+
+```{r}
+# Create dataset
+total_production=data.frame(
+  individual=paste( "Mister ", seq(1,60), sep=""),
+  group=c( rep('A', 10), rep('B', 30), rep('C', 14), rep('D', 6)) ,
+  value=sample( seq(10,100), 60, replace=T)
+)
+ 
+# Set a number of 'empty bar' to add at the end of each group
+empty_bar=4
+to_add = data.frame( matrix(NA, empty_bar*nlevels(total_production$group), ncol(total_production)) )
+colnames(to_add) = colnames(total_production)
+to_add$group=rep(levels(data$group), each=empty_bar)
+data=rbind(total_production, to_add)
+total_production=total_production %>% arrange(group)
+total_production$id=seq(1, nrow(total_production))
+ 
+# Get the name and the y position of each label
+label_data=total_production
+number_of_bar=nrow(label_data)
+angle= 90 - 360 * (label_data$id-0.5) /number_of_bar     # I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
+label_data$hjust<-ifelse( angle < -90, 1, 0)
+label_data$angle<-ifelse(angle < -90, angle+180, angle)
+ 
+# Make the plot
+p = ggplot(total_production, aes(x=as.factor(yieldpercol_kg), y=StateName, fill=Region)) +       # Note that id is a factor. If x is numeric, there is some space between the first bar
+  geom_bar(stat="identity", alpha=0.5) +
+  ylim(-100,120) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank(),
+    plot.margin = unit(rep(-1,4), "cm") 
+  ) +
+  coord_polar() + 
+  geom_text(data=label_data, aes(x=id, y=yieldpercol_kg+10, label=individual, hjust=hjust), color="black", fontface="bold",alpha=0.6, size=2.5, angle= label_data$angle, inherit.aes = FALSE ) 
+ 
+p
+```
+
+
+
+### Honey Bee Data (Images)
+```{r}
+ggplot(data = bee_data) +
+  aes(x = health, y = subspecies) +
+  geom_tile() +
+  labs(title = "How healthy were the bees?",
+    x = "health status",
+    y = "What type subspecies was it?",
+    subtitle = "healtstatus of the several bee subspecies") +
+  theme_minimal()
+```
+
+
+```{r}
+ggplot(data = bee_data) +
+  aes(x = location, y = subspecies) +
+  geom_tile() +
+  labs(title = "Which bees were found where?",
+    x = "Where has the bee been located?",
+    y = "What type subspecies was it?",
+    subtitle = "bee-subspecies located in American cities") +
+  theme_bw()
+```
+
+
+### beehive unnatural: Ssssssomething wrong with the bees?
+
+![krankheiten der bienen](www/healthstatus1.png)
+
+What does it mean?
+
+![ant problems](www/antproblem.png)
+
+![beetles](www/hivebeetles.png)
+
+![hive beeing robbed](www/robbedhive.png)
+
+
+![missing queen](www/missingqueen.png)
+
+
+![few varrao](www/varroa.png)
+
+![healthy bee](www/healthybee.png)
+\begin{multicols}{1}
+
+  \null \vfill
+  \includegraphics[width=.3\textwidth]{www/healthybee.png}
+  \vfill \null
+
+\columnbreak
+
+  \null \vfill
+  \begin{itemize}
+    \item text über die gesunde biene
+  \end{itemize}
+  \vfill \null
+\end{multicols}
