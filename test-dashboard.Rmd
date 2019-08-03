@@ -336,7 +336,7 @@ Row {data-height=60}
 ###
 <h1>A dramatic turn of... honey?</h1>
 
-Row {data-height=700}
+Row {data-height=600}
 -------------------------------------
 ###
 ```{r paged.print=TRUE, eval = TRUE}
@@ -351,7 +351,7 @@ pesticides_year_neonics <- pesticides %>%
 
 pesticides_year_total <- merge(pesticides_year_production, pesticides_year_neonics)
 
-phplot <- ggplot(data=pesticides_year_total,
+ggplot(data=pesticides_year_total,
                  aes(x = year, title = "Year 2000 - What happened to our honey?")
                  ) + 
              geom_line(aes(y = production_year, colour = "Honey")) + 
@@ -377,61 +377,34 @@ phplot <- ggplot(data=pesticides_year_total,
   scale_colour_manual(values = c("cyan", "magenta")) + 
   labs(y = "Amount of honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
   theme_bw()
-
-ggsave("phplot.png", width=)
 ```
 
-Row {data-height=300}
+###
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+
+Row {data-height=400}
 -------------------------------------
 ###
 ![regionalpesticides2016](www/regionpesticides.png)
-
-![totalpesticides](www/pesticides_total.png)
 ###
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
+![totalpesticides](www/pesticides_total.png)
 
 ```{r}
 #https://plot.ly/r/map-subplots-and-small-multiples/ für die pesticides per state vieleicht? :)
 ```
 
-Honey honey honey, must be funny, in a rich man's world! {data-navmenu="Story"}
+
+Colonies {data-navmenu="Story"}
 =====================================
 
-```{r}
-ggplot(data = meanregion_year, aes(x = year, y = price_per_kg, color = Region)) +  
-  scale_x_continuous(breaks=seq(1991, 2017, 5))+
-  geom_line(aes(group = Region)) + geom_point()
+Row {data-height=60}
+-------------------------------------
+###
+<h1>Colonies</h1>
 
-```
-
-```{r}
-checkboxGroupInput(inputId = "checkGroup", 
-                   label = "Region",
-                   choiceNames = c("Northeast",
-                                  "Midwest",
-                                  "West",
-                                  "South"),
-                   choiceValues = c("Northeast",
-                                  "Midwest",
-                                  "West",
-                                  "South")
-                  )
-
-renderPlot({
-  
-  ggplot(data = meanregion_year, aes(x = year, y = price_per_kg, color = Region)) +  
-  scale_x_continuous(breaks=seq(1991, 2017, 5)) +
-  geom_line(aes(group = Region)) + geom_point()
-  
-  
-})
-```
-
-
-colonies {data-navmenu="Story"}
-=====================================
-
+Row {data-height=1000}
+-------------------------------------
+###
 ```{r, }
 total_production %>%
   select(year, totalprod_kg, numcol, yieldpercol_kg) %>% 
@@ -463,10 +436,17 @@ ggsave("honey.png", last_plot(), height = 4, width = 6, units = "in", dpi = 600)
 #default is last plot, but can name objects here
 ```
 
-buzy bees {data-navmenu="Story"}
+Buzy Bees {data-navmenu="Story"}
 =====================================
 
+Row {data-height=60}
+-------------------------------------
+###
+<h1>Buzy Bees</h1>
 
+Row {data-height=1000}
+-------------------------------------
+###
 ```{r, eval = TRUE}
 
 total_production %>% 
@@ -493,11 +473,16 @@ ggplotly(p)
 Neonic Pesticides {data-navmenu="Story"}
 =====================================
 
-```{r}
-datatable(pesticides_year_total)
-```
+Row {data-height=60}
+-------------------------------------
+###
+<h1>Neonic Pesticides</h1>
 
-***
+Row {data-height=600}
+-------------------------------------
+###
+
+###
 <h2>Neonicotinoids</h2>
 <br>
 <h4>Extract from "Neonicotinoid" on Wikipedia</h4>
@@ -512,26 +497,26 @@ In 2018, the Trump administration reversed this decision.
 
 The data shows a slight increase in use of neonic pesticides since 1994 and a strong rise starting in the early 2000s. At that time, besides imidacloprid, two other neonicotinoids, clothianidin and thiamethoxam, entered the market. After that point the amount of neonics applied rises drastically and only finally reaches a turning point in 2014, when neonicotinoids got restriced, and decreases by over 80%. 
 
-
-bla1 {data-navmenu="Story"}
-=====================================
-
+Row {data-height=400}
+-------------------------------------
+###
 ```{r}
-scatter_ggplot = 
-  meanregion_year %>%
-  ggplot(aes(x = year, y = price_per_kg, color = Region, fill= Region)) +
-  geom_jitter(alpha = 0.88) +
-  geom_line() +
-  #scale__viridis() +
-  coord_cartesian() +
-  theme_classic()
-
-ggplotly(scatter_ggplot)
+datatable(pesticides_year_total)
 ```
 
-bla2 {data-navmenu="Story"}
+
+
+Neonics and Prices {data-navmenu="Story"}
 =====================================
 
+Row {data-height=60}
+-------------------------------------
+###
+<h1>Neonics and Prices</h1>
+
+Row {data-height=500}
+-------------------------------------
+###
 ```{r}
 base <- total_production %>%
   plot_ly(x = ~price_per_kg, y = ~nAllNeonic_kg/1000, size = ~yieldpercol_kg, 
@@ -547,11 +532,13 @@ base %>%
   animation_slider(
     currentvalue = list(prefix = "YEAR ", font = list(color="red"))
   )
- 
-
 ```
 
+Row {data-height=500}
+-------------------------------------
+###
 
+###
 ```{r}
 
 total_production %>% 
@@ -561,11 +548,76 @@ total_production %>%
   geom_point(alpha = 0.2) +
   facet_wrap(~Region, ncol = 2) +
   theme_grey() 
-
 ```
 
 
-Honey Bee Data (Images) {data-navmenu="Story"}
+
+Honey Price {data-navmenu="Interactive Plots"}
+=====================================
+
+```{r}
+scatter_ggplot = 
+  meanregion_year %>%
+  ggplot(aes(x = year, y = price_per_kg, color = Region, fill= Region)) +
+  geom_jitter(alpha = 0.88) +
+  geom_line() +
+  #scale__viridis() +
+  coord_cartesian() +
+  theme_classic()
+
+ggplotly(scatter_ggplot)
+```
+
+
+
+Health Status {data-navmenu="Story"}
+=====================================
+
+Row {data-height=60}
+-------------------------------------
+###
+<h1>Beehive unnatural: Ssssssomething wrong with the bees?</h1>
+
+Row {data-height=700}
+-------------------------------------
+###
+![krankheiten der bienen](www/healthstatus1.png)
+
+###
+```{r}
+ggplot(data = bee_data) +
+  aes(x = health, y = subspecies) +
+  geom_tile() +
+  labs(title = "How healthy were the bees?",
+    x = "health status",
+    y = "What type subspecies was it?",
+    subtitle = "healtstatus of the several bee subspecies") +
+  theme_minimal()
+```
+
+Row {data-height=300}
+-------------------------------------
+###
+![ant problems](www/antproblem.png)
+
+###
+![beetles](www/hivebeetles.png)
+
+###
+![hive beeing robbed](www/robbedhive.png)
+
+###
+![missing queen](www/missingqueen.png)
+
+###
+![few varrao](www/varroa.png)
+
+###
+![healthy bee](www/healthybee.png)
+
+
+
+Honey Bee Data (Images) {}
 =====================================
 
 
@@ -581,52 +633,6 @@ ggplot(data = bee_data) +
 ```
 
 
-beehive unnatural: Ssssssomething wrong with the bees? {data-navmenu="Story"}
-=====================================
 
-![krankheiten der bienen](www/healthstatus1.png)
-
-What does it mean?
-
-![ant problems](www/antproblem.png)
-
-![beetles](www/hivebeetles.png)
-
-![hive beeing robbed](www/robbedhive.png)
-
-
-![missing queen](www/missingqueen.png)
-
-
-![few varrao](www/varroa.png)
-
-![healthy bee](www/healthybee.png)
-\begin{multicols}{1}
-
-  \null \vfill
-  \includegraphics[width=.3\textwidth]{www/healthybee.png}
-  \vfill \null
-
-\columnbreak
-
-  \null \vfill
-  \begin{itemize}
-    \item text über die gesunde biene
-  \end{itemize}
-  \vfill \null
-\end{multicols}
-
-```{r}
-ggplot(data = bee_data) +
-  aes(x = health, y = subspecies) +
-  geom_tile() +
-  labs(title = "How healthy were the bees?",
-    x = "health status",
-    y = "What type subspecies was it?",
-    subtitle = "healtstatus of the several bee subspecies") +
-  theme_minimal()
-```
-
-
-Impressum & Quellen nicht vergessen {data-navmenu="Story"}
+Impressum & Quellen nicht vergessen {}
 =====================================
