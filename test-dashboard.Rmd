@@ -351,8 +351,9 @@ pesticides_year_neonics <- pesticides %>%
 
 pesticides_year_total <- merge(pesticides_year_production, pesticides_year_neonics)
 
-ggplot(data=pesticides_year_total,aes(x = year, title = "Year 2000 - What happened to our honey?")
-       ) + 
+phplot <- ggplot(data=pesticides_year_total,
+                 aes(x = year, title = "Year 2000 - What happened to our honey?")
+                 ) + 
              geom_line(aes(y = production_year, colour = "Honey")) + 
              geom_line(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
              scale_y_continuous(breaks=c(
@@ -363,7 +364,7 @@ ggplot(data=pesticides_year_total,aes(x = year, title = "Year 2000 - What happen
                                          "60", "70", "80", "90", "100"
                                          ),
                                 sec.axis = sec_axis(~./30,
-                                                    name = "Amount of neonic pesticides 
+                                                    name = "Amount of neonics 
                                                     applied in the US [million kg]",
                                                     breaks=c(0, 500000, 1000000, 1500000,
                                                              2000000, 2500000, 3000000, 3500000),
@@ -376,6 +377,8 @@ ggplot(data=pesticides_year_total,aes(x = year, title = "Year 2000 - What happen
   scale_colour_manual(values = c("cyan", "magenta")) + 
   labs(y = "Amount of honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
   theme_bw()
+
+ggsave("phplot.png", width=)
 ```
 
 Row {data-height=300}
@@ -384,6 +387,8 @@ Row {data-height=300}
 ![regionalpesticides2016](www/regionpesticides.png)
 
 ![totalpesticides](www/pesticides_total.png)
+###
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 
 ```{r}
