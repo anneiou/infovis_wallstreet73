@@ -1,5 +1,5 @@
 ---
-title: "Bee Aware"
+title: "&nbsp;"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -150,30 +150,50 @@ data2017 <-  sumregion_year[  sumregion_year$year=="2017" , ]
 # beeimages
 bee_data <- read.csv(file="bee_data.csv", header=TRUE, sep=",")
 ```
+
 Home {data-icon="fa-home"}
 =====================================  
-    
-Row {data-width=600}
--------------------------------------
-    
-### Chart 1
-    
-```{r}
-```
-   
-Row {data-width=400}
--------------------------------------
-   
-### Chart 2
 
-```{r}
-```   
+Row {data-height=50}
+-------------------------------------
+###
+<p style="text-align:center;">
+  ![](www/up-arrow.png){width=30px}&nbsp;&nbsp;Use the navigation above to fly through the topics&nbsp;&nbsp;![](www/up-arrow.png){width=30px}
+</p> 
+
+###
+<p style="text-align:center;">
+  ![](www/up-arrow.png){width=30px}&nbsp;&nbsp;Select the first story entry to start your journey&nbsp;&nbsp;![](www/up-arrow.png){width=30px}
+</p> 
+
+###
+<p style="text-align:center;">
+  ![](www/up-arrow.png){width=30px}&nbsp;&nbsp;Play around with interactive plots and learn more&nbsp;&nbsp;![](www/up-arrow.png){width=30px}
+</p> 
+
+Row {data-height=500}
+-------------------------------------
+###
+![](www/map1.png)
+
+### 
+![](www/bee1.jpg) 
+
+Row {data-height=100}
+-------------------------------------
+###
+<h1 style="text-align: center; color: rgba(147, 197, 75, 1); letter-spacing: 5px; word-spacing: 10px; text-shadow: 2px 2px lightgrey;">
+  Fly around and discover the Story of the Bees!
+</h1>
+
+Row {data-height=350}
+-------------------------------------
+   
+### 
+Use this little dashboard to discover an alarming development of our natural environment: The decline of the honey bees.
  
-### Chart 3
-    
-```{r}
-```
-
+### 
+  
 
    
 The Problem of the Honeybee {data-navmenu="Story"}
@@ -181,8 +201,8 @@ The Problem of the Honeybee {data-navmenu="Story"}
 
 Row {data-height=60}
 -------------------------------------
-###
-<h1>The Problem of the Honeybee</h1>
+### {.no-padding}
+<h2>The Problem of the Honeybee</h2>
 
 Row {data-height=1000}
 -------------------------------------
@@ -192,7 +212,7 @@ Row {data-height=1000}
 ```
 Row {data-height=90}
 -------------------------------------
-###
+### {.no-padding}
 <p style="text-align: right;">
   Bees - information beehind&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#general-information)
 </p>
@@ -204,8 +224,8 @@ General Information {data-navmenu="Story"}
 
 Row {data-height=60}
 -------------------------------------
-###
-<h1>Bees - Information beehind</h1>
+### {.no-padding}
+<h2>Bees - Information beehind</h2>
 
 Row {data-height=500}
 -------------------------------------
@@ -230,7 +250,7 @@ Row {data-height=90}
   [![Image name](www/left-arrow.png){width=50px}](#the-problem-of-the-honeybee)&nbsp;&nbsp;&nbsp;The Problem of the Honeybee
 </p>
 
-###
+### {.no-padding}
 <p style="text-align: right;">
   Where did all the honey go?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-production-decline)
 </p>
@@ -242,8 +262,8 @@ Honey Production Decline {data-navmenu="Story"}
 
 Row {data-height=60}
 -------------------------------------
-###
-<h1>Where did all the honey go?</h1>
+### {.no-padding}
+<h2>Where did all the honey go?</h2>
 
 Row {data-height=900}
 -------------------------------------
@@ -287,8 +307,8 @@ Honey Production per State {data-navmenu="Story"}
 
 Row {data-height=60}
 -------------------------------------
-###
-<h1>Which states produce the most honey?</h1>
+### {.no-padding}
+<h2>Which states produce the most honey?</h2>
 
 Row {data-height=1000}
 -------------------------------------
@@ -333,8 +353,8 @@ Honey and Neonic Pesticides {data-navmenu="Story"}
 
 Row {data-height=60}
 -------------------------------------
-###
-<h1>A dramatic turn of... honey?</h1>
+### {.no-padding}
+<h2>A dramatic turn of... honey?</h2>
 
 Row {data-height=600}
 -------------------------------------
@@ -360,8 +380,8 @@ ggplot(data=pesticides_year_total,
                                           0, 10000000, 20000000, 30000000, 40000000, 50000000,
                                           60000000, 70000000, 80000000, 90000000, 100000000
                                         ),
-                                labels=c("0", "10", "20", "30", "40", "50", 
-                                         "60", "70", "80", "90", "100"
+                                labels=c( 
+                                         "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"
                                          ),
                                 sec.axis = sec_axis(~./30,
                                                     name = "Amount of neonics 
@@ -374,7 +394,7 @@ ggplot(data=pesticides_year_total,
                                 ) +
   geom_point(aes(y = production_year, colour = "Honey")) + 
   geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
-  scale_colour_manual(values = c("cyan", "magenta")) + 
+  scale_colour_manual(values = c("grey", "green")) + 
   labs(y = "Amount of honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
   theme_bw()
 ```
@@ -385,9 +405,10 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 Row {data-height=400}
 -------------------------------------
 ###
-![regionalpesticides2016](www/regionpesticides.png)
+![Regional Pesticides 2016](www/regionpesticides.png)
+
 ###
-![totalpesticides](www/pesticides_total.png)
+![Total Pesticides](www/pesticides_total.png)
 
 ```{r}
 #https://plot.ly/r/map-subplots-and-small-multiples/ für die pesticides per state vieleicht? :)
@@ -399,8 +420,8 @@ Colonies {data-navmenu="Story"}
 
 Row {data-height=60}
 -------------------------------------
-###
-<h1>Colonies</h1>
+### {.no-padding}
+<h2>Colonies</h2>
 
 Row {data-height=1000}
 -------------------------------------
@@ -441,8 +462,8 @@ Buzy Bees {data-navmenu="Story"}
 
 Row {data-height=60}
 -------------------------------------
-###
-<h1>Buzy Bees</h1>
+### {.no-padding}
+<h2>Buzy Bees</h2>
 
 Row {data-height=1000}
 -------------------------------------
@@ -475,15 +496,15 @@ Neonic Pesticides {data-navmenu="Story"}
 
 Row {data-height=60}
 -------------------------------------
-###
-<h1>Neonic Pesticides</h1>
+### {.no-padding}
+<h2>Neonic Pesticides</h2>
 
 Row {data-height=600}
 -------------------------------------
 ###
 
 ###
-<h2>Neonicotinoids</h2>
+<h3>Neonicotinoids</h3>
 <br>
 <h4>Extract from "Neonicotinoid" on Wikipedia</h4>
 
@@ -511,8 +532,8 @@ Neonics and Prices {data-navmenu="Story"}
 
 Row {data-height=60}
 -------------------------------------
-###
-<h1>Neonics and Prices</h1>
+### {.no-padding}
+<h2>Neonics and Prices</h2>
 
 Row {data-height=500}
 -------------------------------------
@@ -570,13 +591,17 @@ ggplotly(scatter_ggplot)
 
 
 
+Map {data-navmenu="Interactive Plots"}
+=====================================
+
+
 Health Status {data-navmenu="Story"}
 =====================================
 
 Row {data-height=60}
 -------------------------------------
-###
-<h1>Beehive unnatural: Ssssssomething wrong with the bees?</h1>
+### {.no-padding}
+<h2>Beehive unnatural: Ssssssomething wrong with the bees?</h2>
 
 Row {data-height=700}
 -------------------------------------
@@ -598,22 +623,22 @@ ggplot(data = bee_data) +
 Row {data-height=300}
 -------------------------------------
 ###
-![ant problems](www/antproblem.png)
+![](www/antproblem.png)
 
 ###
-![beetles](www/hivebeetles.png)
+![](www/hivebeetles.png)
 
 ###
-![hive beeing robbed](www/robbedhive.png)
+![](www/robbedhive.png)
 
 ###
-![missing queen](www/missingqueen.png)
+![](www/missingqueen.png)
 
 ###
-![few varrao](www/varroa.png)
+![](www/varroa.png)
 
 ###
-![healthy bee](www/healthybee.png)
+![](www/healthybee.png)
 
 
 
@@ -634,5 +659,5 @@ ggplot(data = bee_data) +
 
 
 
-Impressum & Quellen nicht vergessen {}
+Credits & Legal {}
 =====================================
