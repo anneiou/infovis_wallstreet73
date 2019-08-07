@@ -151,169 +151,90 @@ data2017 <-  sumregion_year[  sumregion_year$year=="2017" , ]
 bee_data <- read.csv(file="bee_data.csv", header=TRUE, sep=",")
 ```
 
-Home {data-icon="fa-home"}
+Start {data-icon="fa-home"}
 =====================================  
-
-Row {data-height=50}
--------------------------------------
-###
-<p style="text-align:center;">
-  ![](www/up-arrow.png){width=30px}&nbsp;&nbsp;Use the navigation above to fly through the topics&nbsp;&nbsp;![](www/up-arrow.png){width=30px}
-</p> 
-
-###
-<p style="text-align:center;">
-  ![](www/up-arrow.png){width=30px}&nbsp;&nbsp;Select the first story entry to start your journey&nbsp;&nbsp;![](www/up-arrow.png){width=30px}
-</p> 
-
-###
-<p style="text-align:center;">
-  ![](www/up-arrow.png){width=30px}&nbsp;&nbsp;Play around with interactive plots and learn more&nbsp;&nbsp;![](www/up-arrow.png){width=30px}
-</p> 
 
 Row {data-height=500}
 -------------------------------------
 ###
-![](www/map1.png)
+<center><h3>Welcome to BEE AWARE!</h3></center>
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 ### 
-![](www/bee1.jpg) 
+![](www/flowerbees.gif) 
 
-Row {data-height=100}
+Row {data-height=200}
 -------------------------------------
 ###
 <h1 style="text-align: center; color: rgba(147, 197, 75, 1); letter-spacing: 5px; word-spacing: 10px; text-shadow: 2px 2px lightgrey;">
   Fly around and discover the Story of the Bees!
 </h1>
 
-Row {data-height=350}
--------------------------------------
-   
-### 
-Use this little dashboard to discover an alarming development of our natural environment: The decline of the honey bees.
- 
-### 
-  
-
-   
-The Problem of the Honeybee {data-navmenu="Story"}
-=====================================
-
-Row {data-height=60}
--------------------------------------
-### {.no-padding}
-<h2>The Problem of the Honeybee</h2>
-
-Row {data-height=1000}
+Row {data-height=300}
 -------------------------------------
 ###
-```{r}
-#hier eine plot grafik
-```
-Row {data-height=90}
--------------------------------------
-### {.no-padding}
-<p style="text-align: right;">
-  Bees - information beehind&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#general-information)
-</p>
+<center>[![The Story](www/bienenbuch.png){width=150px}](#general-information)</center>
+<center>The Story</center>
+
+### 
+<center>[![Health Status](www/hospital.png){width=150px}](#health-status)</center>
+<center>Health Status</center>
+
+### 
+<center>[![The Honey Bee](www/bee.png){width=150px}](#the-honey-bee)</center>
+<center>The Honey Bee</center>
 
 
 
 General Information {data-navmenu="Story"}
 =====================================
 
-Row {data-height=60}
+Row {data-height=100}
 -------------------------------------
 ### {.no-padding}
-<h2>Bees - Information beehind</h2>
+<h3>What is the current honey situation? - Information beehind</h3>
 
 Row {data-height=500}
 -------------------------------------
 ###
-![Stock overview](www/stocks2017.png)
+![Bees love the Midwest! There, bees hummed around in 16,166,000 beehives in 2017. In total, at least 30.4 billion beehives settled in the US in 2017, so many were counted anyway. It is impossible to imagine how many bees you will find in total!](www/stocks2017.png)
 
 ###
-![Colony Overview](www/colonies2017.png)
+![But not every hive was occupied (by individual colonies). Here you can see how many colonies are per region. This is about the same as the distribution of beehives.](www/colonies2017.png)
 
 Row {data-height=500}
 -------------------------------------
 ###
-![Honey Overview](www/totalhoney2017.png)
+![And also in the middle west, the numerous bees were most industrious. Almost 10 billion kilos of honey! That's 10 gigatons of honey.](www/totalhoney2017.png)
 
 ###
-![Price Overview](www/honeyprice2017.png)
-
-Row {data-height=90}
--------------------------------------
-###
-<p style="text-align: left;">
-  [![Image name](www/left-arrow.png){width=50px}](#the-problem-of-the-honeybee)&nbsp;&nbsp;&nbsp;The Problem of the Honeybee
-</p>
-
-### {.no-padding}
-<p style="text-align: right;">
-  Where did all the honey go?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-production-decline)
-</p>
-
-
-
-Honey Production Decline {data-navmenu="Story"}
-=====================================
-
-Row {data-height=60}
--------------------------------------
-### {.no-padding}
-<h2>Where did all the honey go?</h2>
-
-Row {data-height=900}
--------------------------------------
-###
-```{r echo=FALSE, eval = TRUE}
-honeyyear <- total_production %>%
-  group_by(year) %>%
-  summarise(YearTotal=sum(totalprod))
-ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title = "How much honey did the USA produce between xx and xx?")) + 
-  geom_smooth(method = "lm") + 
-  geom_line(color = "#f3a328", size = 2) +
-  geom_point() +
-  scale_x_continuous(breaks=seq(1991, 2017, 3)) +
-  ylab("Million kg Honey produced") + 
-  xlab("years") +
-  theme_bw()+
-  background_grid(major = "xy", minor="y", size.major = 0.2) 
-```
+![Amazingly, kilos of honey cost the least in the West. In the northeast you pay almost 4 Dollard for it. Has it always been like this? We will look at it later!](www/honeyprice2017.png)
 
 Row {data-height=100}
 -------------------------------------
 ###
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-Row {data-height=90}
--------------------------------------
-###
-<p style="text-align: left;">
-  [![Image name](www/left-arrow.png){width=50px}](#general-information)&nbsp;&nbsp;&nbsp;Bees - information beehind
-</p>
-
-###
+### {.no-padding}
 <p style="text-align: right;">
-  Which states produce the most honey?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-production-per-state)
+  Where did all the honey go?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#top-honey-states)
 </p>
 
 
 
-Honey Production per State {data-navmenu="Story"}
+Top honey states  {data-navmenu="Story"}
 =====================================
 
-Row {data-height=60}
+Row {data-height=100}
 -------------------------------------
 ### {.no-padding}
-<h2>Which states produce the most honey?</h2>
+<h3>Which states produce the most honey?</h3>
 
 Row {data-height=1000}
 -------------------------------------
 ###
 ```{r, eval = TRUE}
+myCol <- c("#FE8C01", "#FCA235", "#FAAC25", "#e5b740", "#dd9a65", "#F8B847", "#F5BF2A", "#FDC601", "#FCDC27", "#FEE86B")
+
 honeyperstate <- honeyproduction %>%
     group_by(state) %>%
     summarise(sumprod=sum(totalprod)) %>%
@@ -331,143 +252,71 @@ ggplot(data=honeyperstate,
        geom_text(aes(label=percentage))+
        coord_flip()+
        labs(x="states of the USA",y="total honey produced (in million kg)",title="In which state were the honeybees most diligent?")  +
-       background_grid(major = "xy", minor="y", size.major = 0.2) 
+       scale_fill_brewer("myCol") +
+       background_grid(major = "xy", minor="y", size.major = 0.2) +
+       theme_grey() 
 ```
 
-Row {data-height=90}
--------------------------------------
 ###
+As we have seen, a lot of honey was produced in the Midwest. And indeed, North Dakota (1992-2017) was the main producer of honey and produced 18.2 million kilos of honey. The top 10 states are North Dakota (Midwest), California (West), South Dakota (Midwest), Florida (South), Montana (West), Minnesota (Midwest), Texas (South), Wisconsin (Midwest), Michigan (Midwest) and Idaho (West) .
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
 <p style="text-align: left;">
-  [![Image name](www/left-arrow.png){width=50px}](#honey-production-decline)&nbsp;&nbsp;&nbsp;Where did all the honey go?
+  [![Image name](www/left-arrow.png){width=50px}](#general-information)&nbsp;&nbsp;&nbsp;What is the current honey situation - information beehind
 </p>
 
-###
+### {.no-padding}
 <p style="text-align: right;">
-  A dramatic turn of... honey?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-and-neonic-pesticides)
+  How does the honey spread across the country?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-production-map)
 </p>
 
 
 
-Honey and Neonic Pesticides {data-navmenu="Story"}
+Honey Production Map {data-navmenu="Story"}
 =====================================
 
-Row {data-height=60}
+Row {data-height=100}
 -------------------------------------
 ### {.no-padding}
-<h2>A dramatic turn of... honey?</h2>
+<h3>How does the honey spread across the country?</h3>
 
-Row {data-height=600}
+Row {data-height=800}
 -------------------------------------
 ###
-```{r paged.print=TRUE, eval = TRUE}
-pesticides_year_production <- pesticides %>%
-  group_by(year) %>%
-  summarise(production_year=sum(totalprod_kg))
+![](www/tilegram100000.png)
 
-pesticides_year_neonics <- pesticides %>% 
-  na.omit(nAllNeonic) %>% 
-  group_by(year) %>% 
-  summarise(neonics_year=sum(nAllNeonic))
-
-pesticides_year_total <- merge(pesticides_year_production, pesticides_year_neonics)
-
-ggplot(data=pesticides_year_total,
-                 aes(x = year, title = "Year 2000 - What happened to our honey?")
-                 ) + 
-             geom_line(aes(y = production_year, colour = "Honey")) + 
-             geom_line(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
-             scale_y_continuous(breaks=c(
-                                          0, 10000000, 20000000, 30000000, 40000000, 50000000,
-                                          60000000, 70000000, 80000000, 90000000, 100000000
-                                        ),
-                                labels=c( 
-                                         "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"
-                                         ),
-                                sec.axis = sec_axis(~./30,
-                                                    name = "Amount of neonics 
-                                                    applied in the US [million kg]",
-                                                    breaks=c(0, 500000, 1000000, 1500000,
-                                                             2000000, 2500000, 3000000, 3500000),
-                                                    labels=c("0", "0,5", "1", "1,5", 
-                                                             "2", "2,5", "3", "3,5")
-                                                    )
-                                ) +
-  geom_point(aes(y = production_year, colour = "Honey")) + 
-  geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
-  scale_colour_manual(values = c("grey", "green")) + 
-  labs(y = "Amount of honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
-  theme_bw()
-```
-
-###
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
-
-Row {data-height=400}
+Row {data-height=200}
 -------------------------------------
 ###
-![Regional Pesticides 2016](www/regionpesticides.png)
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-###
-![Total Pesticides](www/pesticides_total.png)
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<p style="text-align: left;">
+  [![Image name](www/left-arrow.png){width=50px}](#top-honey-states)&nbsp;&nbsp;&nbsp;Which states produce the most honey? 
+</p>
 
-```{r}
-#https://plot.ly/r/map-subplots-and-small-multiples/ für die pesticides per state vieleicht? :)
-```
+### {.no-padding}
+<p style="text-align: right;">
+  How did the honey production change over the past decades?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-production-over-time)
+</p>
 
 
-Colonies {data-navmenu="Story"}
+
+Honey production over time {data-navmenu="Story"}
 =====================================
 
-Row {data-height=60}
+Row {data-height=100}
 -------------------------------------
 ### {.no-padding}
-<h2>Colonies</h2>
+<h3>How did the honey production change over the past decades?</h3>
 
 Row {data-height=1000}
 -------------------------------------
-###
-```{r, }
-total_production %>%
-  select(year, totalprod_kg, numcol, yieldpercol_kg) %>% 
-  group_by(year) %>% 
-  summarize_each(funs(mean)) %>% 
-  mutate(totalprod_kg_mio = totalprod_kg / 1000000) %>% 
-  ggplot(aes(x = year, y = totalprod_kg_mio)) +
-  geom_point(
-    aes(
-      size = numcol, 
-      # fill = yieldpercol_kg),
-    color = yieldpercol_kg),
-    shape = 19
-  ) +
-  geom_smooth(span = 2, se = FALSE, color = "gray", linetype = "dotted") +
-  scale_color_viridis(direction = -1, option = "A", name = "Yield per Colony\n(kg)") +
-  # scale_y_continuous(limits = c(3000000, 5500000), breaks = c(3000000, 3500000, 4000000, 4500000, 5000000, 5500000), labels = c(3.0, 3.5, 4.0, 4.5, 5.0, 5.5)) +
-  scale_x_continuous(limits = c(1992, 2017), breaks = c(1992, 1997, 2002, 2007, 2012, 2017)) +
-  guides(size = guide_legend("Honey Producing\nColonies"), limits = c(55000, 65000)) +
-  theme_minimal() +
-  labs(title = "Total U.S. Honey Production Decreases", 
-       x = "Year", 
-       y = "US Honey Production (millions of kg)") +
-  NULL
-
-#save
-
-ggsave("honey.png", last_plot(), height = 4, width = 6, units = "in", dpi = 600)
-#default is last plot, but can name objects here
-```
-
-Buzy Bees {data-navmenu="Story"}
-=====================================
-
-Row {data-height=60}
--------------------------------------
 ### {.no-padding}
-<h2>Buzy Bees</h2>
-
-Row {data-height=1000}
--------------------------------------
-###
 ```{r, eval = TRUE}
 
 total_production %>% 
@@ -489,25 +338,206 @@ ggplotly(p)
 
 ```
 
-
-
-Neonic Pesticides {data-navmenu="Story"}
-=====================================
-
-Row {data-height=60}
+Row {data-height=100}
 -------------------------------------
 ### {.no-padding}
-<h2>Neonic Pesticides</h2>
+<p style="text-align: left;">
+  [![Image name](www/left-arrow.png){width=50px}](#honey-production-map)&nbsp;&nbsp;&nbsp;How does the honey spread across the country? 
+</p>
 
-Row {data-height=600}
+### {.no-padding}
+<p style="text-align: right;">
+  How did the honey price change over the past decades?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-price)
+</p>
+
+
+Honey Price {data-navmenu="Story"}
+=====================================
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<h3>How did the honey price change over the past decades?</h3>
+
+Row {data-height=1000}
 -------------------------------------
 ###
+```{r}
+scatter_ggplot = 
+  meanregion_year %>%
+  ggplot(aes(x = year, y = price_per_kg, color = Region, fill= Region)) +
+  geom_point() +
+  geom_line() +
+  #scale__viridis() +
+  coord_cartesian() +
+  theme_classic()
+
+ggplotly(scatter_ggplot)
+```
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<p style="text-align: left;">
+  [![Image name](www/left-arrow.png){width=50px}](#honey-production-over-time)&nbsp;&nbsp;&nbsp;How did the honey production change over the past decades? 
+</p>
+
+### {.no-padding}
+<p style="text-align: right;">
+  How did the amount of colonies and their yield change over the years?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#colony-productivity)
+</p>
+
+
+Colony Productivity {data-navmenu="Story"}
+=====================================
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<h3>How did the amount of colonies and their yield change over the years?</h3>
+
+Row {data-height=1000}
+-------------------------------------
+###
+```{r, }
+total_production %>%
+  select(year, totalprod_kg, numcol, yieldpercol_kg) %>% 
+  group_by(year) %>% 
+  summarize_each(funs(mean)) %>% 
+  mutate(totalprod_kg_mio = totalprod_kg / 1000000) %>% 
+  ggplot(aes(x = year, y = totalprod_kg_mio)) +
+  geom_point(
+    aes(
+      size = numcol, 
+    color = yieldpercol_kg),
+    shape = 19
+  ) +
+  geom_smooth(span = 2, se = FALSE, color = "gray", linetype = "dotted") +
+  scale_color_viridis(direction = -1, option = "A", name = "Yield per Colony\n(kg)") +
+  scale_x_continuous(limits = c(1992, 2017), breaks = c(1992, 1997, 2002, 2007, 2012, 2017)) +
+  guides(size = guide_legend("Honey Producing\nColonies"), limits = c(55000, 65000)) +
+  theme_minimal() +
+  labs(title = "Total U.S. Honey Production Decreases", 
+       x = "Year", 
+       y = "US Honey Production (millions of kg)") +
+  NULL
+
+#ggsave("honey.png", last_plot(), height = 4, width = 6, units = "in", dpi = 600)
+```
 
 ###
-<h3>Neonicotinoids</h3>
-<br>
-<h4>Extract from "Neonicotinoid" on Wikipedia</h4>
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<p style="text-align: left;">
+  [![Image name](www/left-arrow.png){width=50px}](#honey-price)&nbsp;&nbsp;&nbsp;How did the honey price change over the past decades? 
+</p>
+
+### {.no-padding}
+<p style="text-align: right;">
+  Where did all the honey go?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-production-decline)
+</p>
+
+
+Honey Production Decline {data-navmenu="Story"}
+=====================================
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<h3>Where did all the honey go?</h3>
+
+Row {data-height=1000}
+-------------------------------------
+###
+```{r echo=FALSE, eval = TRUE}
+honeyyear <- total_production %>%
+  group_by(year) %>%
+  summarise(YearTotal=sum(totalprod))
+
+ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title = "How much honey did the USA produce between xx and xx?")) + 
+  geom_smooth(method = "lm") + 
+  geom_line(color = "#f3a328", size = 2) +
+  geom_point() +
+  scale_x_continuous(breaks=seq(1991, 2017, 3)) +
+  ylab("Million kg Honey produced") + 
+  xlab("years") +
+  theme_bw()+
+  ggtitle("How much honey did the USA produce between xx and xx?") +
+  background_grid(major = "xy", minor="y", size.major = 0.2) 
+```
+
+###
+In 1995, more than 210 million kilos of honey were produced by American bees. By 2015, the honey pots looked emptier, just under 150 million kilos of honey were the yield of recent years. Is there a reason?
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<p style="text-align: left;">
+  [![Image name](www/left-arrow.png){width=50px}](#colony-productivity)&nbsp;&nbsp;&nbsp;How did the amount of colonies and their yield change of the years? 
+</p>
+
+### {.no-padding}
+<p style="text-align: right;">
+  A dramatic turn of... honey?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-and-neonic-pesticides)
+</p>
+
+
+
+Honey and Neonic Pesticides {data-navmenu="Story"}
+=====================================
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<h3>A dramatic turn of... honey?</h3>
+
+Row {data-height=1000}
+-------------------------------------
+###
+```{r paged.print=TRUE, eval = TRUE}
+pesticides_year_production <- pesticides %>%
+  group_by(year) %>%
+  summarise(production_year=sum(totalprod_kg))
+
+pesticides_year_neonics <- pesticides %>% 
+  na.omit(nAllNeonic) %>% 
+  group_by(year) %>% 
+  summarise(neonics_year=sum(nAllNeonic))
+
+pesticides_year_total <- merge(pesticides_year_production, pesticides_year_neonics)
+
+ggplot(data=pesticides_year_total,
+                 aes(x = year)
+                 ) + 
+             geom_line(aes(y = production_year, colour = "Honey")) + 
+             geom_line(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
+             scale_y_continuous(breaks=c(
+                                          0, 10000000, 20000000, 30000000, 40000000, 50000000,
+                                          60000000, 70000000, 80000000, 90000000, 100000000
+                                        ),
+                                labels=c( 
+                                         "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"
+                                         ),
+                                sec.axis = sec_axis(~./30,
+                                                    name = "Neonics applied in the US [million kg]",
+                                                    breaks=c(0, 500000, 1000000, 1500000,
+                                                             2000000, 2500000, 3000000, 3500000),
+                                                    labels=c("0", "0,5", "1", "1,5", 
+                                                             "2", "2,5", "3", "3,5")
+                                                    )
+                                ) +
+  geom_point(aes(y = production_year, colour = "Honey")) + 
+  geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
+  scale_colour_manual(values = c("grey", "green")) + 
+  labs(y = "Honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
+  ggtitle("Year 2000 - What happened to our honey?") +
+  theme_grey()
+```
+
+###
 "Neonicotinoids (sometimes shortened to neonics /ˈniːoʊnɪks/) are a class of neuro-active insecticides chemically similar to nicotine.[...] <br>
 Imidacloprid is the most widely used insecticide in the world.[...] <br>
 Most academic and governmental bodies agree that neonicotinoids have had a negative influence on bee populations." <br><br>
@@ -518,22 +548,61 @@ In 2018, the Trump administration reversed this decision.
 
 The data shows a slight increase in use of neonic pesticides since 1994 and a strong rise starting in the early 2000s. At that time, besides imidacloprid, two other neonicotinoids, clothianidin and thiamethoxam, entered the market. After that point the amount of neonics applied rises drastically and only finally reaches a turning point in 2014, when neonicotinoids got restriced, and decreases by over 80%. 
 
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<p style="text-align: left;">
+  [![Image name](www/left-arrow.png){width=50px}](#honey-production-decline)&nbsp;&nbsp;&nbsp;Where did all the honey go? 
+</p>
+
+### {.no-padding}
+<p style="text-align: right;">
+  Which neonics are used?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#neonicotinoids)
+</p>
+
+
+
+Neonicotinoids {data-navmenu="Story"}
+=====================================
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<h3>Which neonics are used?</h3>
+
 Row {data-height=400}
 -------------------------------------
 ###
+![Regional Pesticides 2016](www/regionpesticides.png)
+
+###
+![Total Pesticides](www/pesticides_total.png)
+
 ```{r}
-datatable(pesticides_year_total)
+#https://plot.ly/r/map-subplots-and-small-multiples/ für die pesticides per state vieleicht? :)
 ```
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<p style="text-align: left;">
+  [![Image name](www/left-arrow.png){width=50px}](#honey-and-neonic-pesticides)&nbsp;&nbsp;&nbsp;A dramatic turn of... honey? 
+</p>
+
+### {.no-padding}
+<p style="text-align: right;">
+  How do Neonics affect honey prices?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#neonics-and-prices)
+</p>
+
 
 
 
 Neonics and Prices {data-navmenu="Story"}
 =====================================
 
-Row {data-height=60}
+Row {data-height=100}
 -------------------------------------
 ### {.no-padding}
-<h2>Neonics and Prices</h2>
+<h3>How do Neonics affect honey prices?</h3>
 
 Row {data-height=500}
 -------------------------------------
@@ -541,7 +610,7 @@ Row {data-height=500}
 ```{r}
 base <- total_production %>%
   plot_ly(x = ~price_per_kg, y = ~nAllNeonic_kg/1000, size = ~yieldpercol_kg, 
-          text = ~Region, hoverinfo = "text") %>%
+          text=~Region, hoverinfo = "text") %>%
   layout()
 
 base %>%
@@ -558,6 +627,7 @@ base %>%
 Row {data-height=500}
 -------------------------------------
 ###
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 ###
 ```{r}
@@ -571,37 +641,25 @@ total_production %>%
   theme_grey() 
 ```
 
-
-
-Honey Price {data-navmenu="Interactive Plots"}
-=====================================
-
-```{r}
-scatter_ggplot = 
-  meanregion_year %>%
-  ggplot(aes(x = year, y = price_per_kg, color = Region, fill= Region)) +
-  geom_jitter(alpha = 0.88) +
-  geom_line() +
-  #scale__viridis() +
-  coord_cartesian() +
-  theme_classic()
-
-ggplotly(scatter_ggplot)
-```
-
-
-
-Map {data-navmenu="Interactive Plots"}
-=====================================
-
-
-Health Status {data-navmenu="Story"}
-=====================================
-
-Row {data-height=60}
+Row {data-height=100}
 -------------------------------------
 ### {.no-padding}
-<h2>Beehive unnatural: Ssssssomething wrong with the bees?</h2>
+<p style="text-align: left;">
+  [![Image name](www/left-arrow.png){width=50px}](#honey-and-neonic-pesticides)&nbsp;&nbsp;&nbsp;A dramatic turn of... honey? 
+</p>
+
+### {.no-padding}
+
+
+
+
+Health Status {}
+=====================================
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<h2>Unnatural Beehiviour: Ssssssomething wrong with the bees?</h2>
 
 Row {data-height=700}
 -------------------------------------
@@ -642,7 +700,7 @@ Row {data-height=300}
 
 
 
-Honey Bee Data (Images) {}
+The Honey Bee  {}
 =====================================
 
 
@@ -661,3 +719,7 @@ ggplot(data = bee_data) +
 
 Credits & Legal {}
 =====================================
+
+###
+Tabelle Staaten, Region
+Maßstab PPT Grafiken
