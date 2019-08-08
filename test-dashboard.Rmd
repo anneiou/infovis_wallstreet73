@@ -181,7 +181,7 @@ Row {data-height=300}
 <center>Health Status</center>
 
 ### 
-<center>[![The Honey Bee](www/bee.png){width=150px}](#the-honey-bee)</center>
+<center>[![The Honey Bee](www/bee.png){width=150px}](#species)</center>
 <center>The Honey Bee</center>
 
 
@@ -251,10 +251,14 @@ ggplot(data=honeyperstate,
        geom_col(aes(fill=state),show.legend=F)+
        geom_text(aes(label=percentage))+
        coord_flip()+
-       labs(x="states of the USA",y="total honey produced (in million kg)",title="In which state were the honeybees most diligent?")  +
-       scale_fill_brewer("myCol") +
+       labs(
+         title="Total honey produced per state from 1992 to 2017", 
+         x="U.S. states",
+         y="total honey produced [million kg]"
+         )  +
+       scale_fill_manual(values = myCol) +
        background_grid(major = "xy", minor="y", size.major = 0.2) +
-       theme_grey() 
+       theme_minimal() 
 ```
 
 ###
@@ -314,7 +318,7 @@ Row {data-height=100}
 ### {.no-padding}
 <h3>How did the honey production change over the past decades?</h3>
 
-Row {data-height=1000}
+Row {data-height=800}
 -------------------------------------
 ### {.no-padding}
 ```{r, eval = TRUE}
@@ -326,17 +330,23 @@ total_production %>%
   summarise(totalprod_year_Region = mean(totalprod_kg_mio)) %>% 
   ggplot(aes(x = year, y = totalprod_year_Region, color = Region)) +
   geom_line() +
+  scale_color_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
   theme_minimal() +
   labs(
-    title = "default",
-    x = "Blbbaskd",
-    y = "blabla"
+    title="Amount of honey produced after regions",
+    x = "year",
+    y = "honey produced [million kg]"
   ) -> p
 
 
 ggplotly(p)
 
 ```
+
+Row {data-height=200}
+-------------------------------------
+###
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 Row {data-height=100}
 -------------------------------------
@@ -359,7 +369,7 @@ Row {data-height=100}
 ### {.no-padding}
 <h3>How did the honey price change over the past decades?</h3>
 
-Row {data-height=1000}
+Row {data-height=800}
 -------------------------------------
 ###
 ```{r}
@@ -368,12 +378,23 @@ scatter_ggplot =
   ggplot(aes(x = year, y = price_per_kg, color = Region, fill= Region)) +
   geom_point() +
   geom_line() +
+  labs(
+    title="Price per kilo of honey after regions",
+    x="year", 
+    y="price per kg of honey [$]") +
   #scale__viridis() +
+  scale_color_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
+  scale_fill_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
   coord_cartesian() +
-  theme_classic()
+  theme_minimal()
 
 ggplotly(scatter_ggplot)
 ```
+
+Row {data-height=200}
+-------------------------------------
+###
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 Row {data-height=100}
 -------------------------------------
@@ -418,8 +439,8 @@ total_production %>%
   guides(size = guide_legend("Honey Producing\nColonies"), limits = c(55000, 65000)) +
   theme_minimal() +
   labs(title = "Total U.S. Honey Production Decreases", 
-       x = "Year", 
-       y = "US Honey Production (millions of kg)") +
+       x = "year", 
+       y = "US Honey Production [million kg]") +
   NULL
 
 #ggsave("honey.png", last_plot(), height = 4, width = 6, units = "in", dpi = 600)
@@ -458,14 +479,13 @@ honeyyear <- total_production %>%
   summarise(YearTotal=sum(totalprod))
 
 ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title = "How much honey did the USA produce between xx and xx?")) + 
-  geom_smooth(method = "lm") + 
+  geom_smooth(method = "lm", color = "#975422") + 
   geom_line(color = "#f3a328", size = 2) +
   geom_point() +
   scale_x_continuous(breaks=seq(1991, 2017, 3)) +
-  ylab("Million kg Honey produced") + 
-  xlab("years") +
-  theme_bw()+
-  ggtitle("How much honey did the USA produce between xx and xx?") +
+  labs(x="years", y="total honey produced [million kg]") + 
+  theme_minimal()+
+  ggtitle("How much honey did the USA produce between 1991 and 2017?") +
   background_grid(major = "xy", minor="y", size.major = 0.2) 
 ```
 
@@ -531,17 +551,13 @@ ggplot(data=pesticides_year_total,
                                 ) +
   geom_point(aes(y = production_year, colour = "Honey")) + 
   geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
-  scale_colour_manual(values = c("grey", "green")) + 
+  scale_colour_manual(values = c("#e5b740", "green")) + 
   labs(y = "Honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
   ggtitle("Year 2000 - What happened to our honey?") +
-  theme_grey()
+  theme_minimal()
 ```
 
 ###
-"Neonicotinoids (sometimes shortened to neonics /ˈniːoʊnɪks/) are a class of neuro-active insecticides chemically similar to nicotine.[...] <br>
-Imidacloprid is the most widely used insecticide in the world.[...] <br>
-Most academic and governmental bodies agree that neonicotinoids have had a negative influence on bee populations." <br><br>
-
 In a 2013, the European Food Safety Authority (EFSA) has been assigned by the European Union to conduct scientific research to the impact of neonicotinoids on honeybees. The studies findings stated that "neonicotinoids pose an unacceptably high risk to bees" and that previous research commissioned by insecticide manufacturers contained inexplicable data gaps. In response, the use of certain neonicotinoids has been restriced and tightend up over the years. 
 In 2014, the US government under Barack Obama issued a blanket ban against the use of neonicotinoids on National Wildlife Refuges.
 In 2018, the Trump administration reversed this decision.
@@ -570,7 +586,7 @@ Row {data-height=100}
 ### {.no-padding}
 <h3>Which neonics are used?</h3>
 
-Row {data-height=400}
+Row {data-height=600}
 -------------------------------------
 ###
 ![Regional Pesticides 2016](www/regionpesticides.png)
@@ -578,9 +594,13 @@ Row {data-height=400}
 ###
 ![Total Pesticides](www/pesticides_total.png)
 
-```{r}
-#https://plot.ly/r/map-subplots-and-small-multiples/ für die pesticides per state vieleicht? :)
-```
+Row {data-height=400}
+-------------------------------------
+###
+"Neonicotinoids (sometimes shortened to neonics /ˈniːoʊnɪks/) are a class of neuro-active insecticides chemically similar to nicotine.[...] <br>
+Imidacloprid is the most widely used insecticide in the world.[...] <br>
+Most academic and governmental bodies agree that neonicotinoids have had a negative influence on bee populations." [Source: 1]
+
 Row {data-height=100}
 -------------------------------------
 ### {.no-padding}
@@ -590,56 +610,38 @@ Row {data-height=100}
 
 ### {.no-padding}
 <p style="text-align: right;">
-  How do Neonics affect honey prices?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#neonics-and-prices)
+  What did we learn?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#summary)
 </p>
 
 
 
 
-Neonics and Prices {data-navmenu="Story"}
+Summary {data-navmenu="Story"}
 =====================================
 
 Row {data-height=100}
 -------------------------------------
 ### {.no-padding}
-<h3>How do Neonics affect honey prices?</h3>
+<h3>What did we learn?</h3>
 
-Row {data-height=500}
+Row {data-height=900}
 -------------------------------------
 ###
-```{r}
-base <- total_production %>%
-  plot_ly(x = ~price_per_kg, y = ~nAllNeonic_kg/1000, size = ~yieldpercol_kg, 
-          text=~Region, hoverinfo = "text") %>%
-  layout()
+What did we learn?
 
-base %>%
-  add_markers(color = ~Region, frame = ~year, ids = ~nAllNeonic_kg) %>%
-  animation_opts(1000, easing = "elastic", redraw = FALSE) %>%
-  animation_button(
-    x = 1, xanchor = "right", y = 0, yanchor = "bottom"
-  ) %>%
-  animation_slider(
-    currentvalue = list(prefix = "YEAR ", font = list(color="red"))
-  )
-```
+<ul>
+  <li>Most honey is produced in the midwest</li>
+  <li>The northeast has the highest honey price while producing the least</li>
+  <li>With 18.2 M kg since 1992, North Dakota is the #1 honey producer in the US</li>
+</ul>
 
-Row {data-height=500}
--------------------------------------
-###
+<br>
+<hr>
+<strong>Our Advice</strong>
+
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-###
-```{r}
 
-total_production %>% 
-  select(nAllNeonic_kg, price_per_kg, Region) %>% 
-  mutate(nAllNeonic_t = nAllNeonic_kg / 1000) %>% 
-  ggplot(aes(x = price_per_kg, y = nAllNeonic_t, color = Region)) +
-  geom_point(alpha = 0.2) +
-  facet_wrap(~Region, ncol = 2) +
-  theme_grey() 
-```
 
 Row {data-height=100}
 -------------------------------------
@@ -651,9 +653,69 @@ Row {data-height=100}
 ### {.no-padding}
 
 
+Species  {data-navmenu="The Honey Bee"}
+=====================================
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<h2>Species</h2>
+
+Row {data-height=600}
+-------------------------------------
+###
+![](www/beespecies.png)
+
+Row {data-height=150}
+-------------------------------------
+###
+<strong>Western bee (Apis mellifera)</strong> <br>
+Most common of the 7-12 species. Like all honey bee species, the western honey bee is eusocial, creating colonies with a single fertile female (or "queen"), many normally non-reproductive females or "workers", and a small proportion of fertile males or "drones". Individual colonies can house tens of thousands of bees. Colony activities are organized by complex communication between individuals, through both pheromones and the dance language. Western honey bees are threatened by pests and diseases, especially the Varroa mite and colony collapse disorder. [Source: 2]
+
+Row {data-height=350}
+-------------------------------------
+###
+<strong>Russian Honey Bee</strong><br>
+The Russian honeybee refers to honey bees (Apis mellifera) that originate in the Primorsky Krai region of Russia. This strain of bee was imported into the United States in 1997 by the USDA's Honeybee Breeding, Genetics & Physiology Laboratory in Baton Rouge, Louisiana in response to severe declines in bee populations caused by infestations of parasitic mites, and has been used in breeding programs to improve existing stocks. Russian honey bees have an innate resistance to various parasitic mites. This strain occurs in the original native range of the varroa mite, and selective pressure could have favored bees that exhibited aggressive behavior against colony-level mite infestations. Accordingly, experimental research has found that mite populations decline in colonies of pure Russian[2] and of hybrid Russian-Italian bees. The mechanisms through which mite populations are controlled in these colonies include hygienic behavior towards mites,[4] and possibly increased aggression towards mites. Russian stocks also have been shown to resist infection by tracheal mites. 
+[Source: 3]
+
+###
+<strong>Italian honey bee</strong><br> 
+Apis mellifera ligustica is the Italian bee which is a subspecies of the western honey bee (Apis mellifera). The Italian honey bee is thought to originate from the continental part of Italy, south of the Alps, and north of Sicily. The subspecies may have survived the last Ice Age in Italy.[1] It is genetically a different subspecies than that from the Iberian peninsula and from Sicily. It is the most widely distributed of all honey bees, and has proven adaptable to most climates from subtropical to cool temperate, but it is less successful in humid tropical regions. It is sometimes called the Ligurian bee.Italian bees, having been conditioned to the warmer climate of the central Mediterranean, are less able to cope with the "hard" winters and cool, wet springs of more northern latitudes. They do not form such tight winter clusters. More food has to be consumed to compensate for the greater heat loss from the loose cluster. The tendency to raise broods late in autumn also increases food consumption.
+[Source: 4]
+
+###
+<strong>Carniolan honey bee</strong> </br>
+The Carniolan honey bee (Apis mellifera carnica, Pollmann) is a subspecies of the western honey bee. The Carniolan honey bee is native to Slovenia, southern Austria, and parts of Croatia, Bosnia and Herzegovina, Serbia, Hungary, Romania, and Bulgaria. It is favored among beekeepers for several reasons, not the least being its ability to defend itself successfully against insect pests while at the same time being extremely gentle in its behavior toward beekeepers. These bees are particularly adept at adjusting worker population to nectar availability. It relies on these rapid adjustments of population levels to rapidly expand worker bee populations after nectar becomes available in the spring, and, again, to rapidly cut off brood production when nectar ceases to be available in quantity. Carniolan honey bees are about the same size as the Italian honey bee, but they are physically distinguished by their generally dusky brown-grey color that is relieved by stripes of a subdued lighter brown color. Their chitin is dark, but it is possible to find lighter colored or brown colored rings and dots on their bodies. They are also known as the "grey bee". 
+[Source: 5]
+
+Locations  {data-navmenu="The Honey Bee"}
+=====================================
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<h2>Locations</h2>
+
+Row {data-height=800}
+-------------------------------------
+###
+![](www/beemap.png)
+
+Row {data-height=200}
+-------------------------------------
+###
+1= San Jose, California <br>
+2= Saratoga, California <br>
+3= Alvin, Texas <br>
+4= New Orleans, Lousiana <br>
+5= Athens, Georgia <br>
+6= Des Moines, Indiana <br>
+7= Keene, New Hampshire <br>
 
 
-Health Status {}
+
+Health Status {data-navmenu="The Honey Bee"}
 =====================================
 
 Row {data-height=100}
@@ -667,16 +729,7 @@ Row {data-height=700}
 ![krankheiten der bienen](www/healthstatus1.png)
 
 ###
-```{r}
-ggplot(data = bee_data) +
-  aes(x = health, y = subspecies) +
-  geom_tile() +
-  labs(title = "How healthy were the bees?",
-    x = "health status",
-    y = "What type subspecies was it?",
-    subtitle = "healtstatus of the several bee subspecies") +
-  theme_minimal()
-```
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 Row {data-height=300}
 -------------------------------------
@@ -700,26 +753,60 @@ Row {data-height=300}
 
 
 
-The Honey Bee  {}
-=====================================
-
-
-```{r}
-ggplot(data = bee_data) +
-  aes(x = location, y = subspecies) +
-  geom_tile() +
-  labs(title = "Which bees were found where?",
-    x = "Where has the bee been located?",
-    y = "What type subspecies was it?",
-    subtitle = "bee-subspecies located in American cities") +
-  theme_bw()
-```
-
-
-
 Credits & Legal {}
 =====================================
-
+Row {data-height=700}
+-------------------------------------
 ###
+<h3>About BEE AWARE – Philosophy</h3>
+Without bees, our crops would be a lot lower, not only for fruits and vegetables but also for plants like cotton. Bees play a key role in the supply chain of humans and animals. In terms of biodiversity, the diversity of species, bees, especially wild bees, play a central role. They are an integral part of a functioning ecosystem, from which life, as we know it, depends in many ways. Without pollen and nectar collecting bees we miss important flower pollinators.
+The use of pesticides, monocultures and other harmful environmental effects not only threatens the honey bee, more than half of all wild bees are endangered. The danger is recognized and there are already several smaller and larger companies to protect the bees. What is missing, however, is a pooling of forces, a strong, long-range campaign and a central communications platform to channel public attention to the protection of wild bees. For this purpose, "beeaware" makes strong and provides an explanation about the situation of bees in the US. This results in the initiative "beeaware".
+<br><br>
+<strong>What is BEE AWARE doing?</strong>
+<br>
+"Beeaware" supports local and regional beekeepers in their education through a broad reach. In addition, it is represented on numerous honey products from retail, so interested citizens quickly and easily get up to date information and research results around the bee world. In addition, beeaware supports the distribution of flower seeds to protect and preserve the habitat of wild and honey bees.
+How do I recognize beeaware?
+You always recognize products supported by beeaware on our logo (see below). From there, a QR code always leads to our website!
+
+<hr>
+
+<h3>Credits</h3>
+<br>
+<strong>Datasets</strong> <br>
+https://www.kaggle.com/jessicali9530/honey-production <br>
+https://www.kaggle.com/kevinzmith/honey-with-neonic-pesticide <br>
+https://www.kaggle.com/jenny18/honey-bee-annotated-images <br>
+
+<strong>Web Articles</strong> <br>
+https://www.greenpeace.de/sites/www.greenpeace.de/files/neonicotinoid_pesticides_final_single_web_final.pdf <br>
+[1]https://en.wikipedia.org/wiki/Neonicotinoid <br>
+[2]https://en.wikipedia.org/wiki/Western_honey_bee <br>
+[3]https://en.wikipedia.org/wiki/Russian_honey_bee <br>
+[4]https://en.wikipedia.org/wiki/Italian_bee <br>
+[5]https://en.wikipedia.org/wiki/Carniolan_honey_bee <br>
+
+<strong>Images</strong> <br>
+Global distribution map: https://en.wikipedia.org/wiki/Western_honey_bee#/media/File:Apis_mellifera_distribution_map.svg <br>
+
 Tabelle Staaten, Region
 Maßstab PPT Grafiken
+
+Row {data-height=300}
+-------------------------------------
+###
+<h3>Bee Aware Campaign</h3> <br>
+Informationsvisualisierung <br>
+RWTH Aachen <br><br>
+<strong>Founders</strong> <br>
+Anne Vollema <br>
+Tom Gerlach <br>
+
+
+###
+An initiative of Bee Aware
+<center><img src="www/honigbiene.png"></center>
+
+###
+![](www/thankyou.gif)
+
+
