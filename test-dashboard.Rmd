@@ -233,27 +233,27 @@ Row {data-height=1000}
 -------------------------------------
 ###
 ```{r, eval = TRUE}
-myCol <- c("#FE8C01", "#FCA235", "#FAAC25", "#e5b740", "#dd9a65", "#F8B847", "#F5BF2A", "#FDC601", "#FCDC27", "#FEE86B")
+myCol <- c("#FE8C01", "#FCA235", "#FAAC25", "#e5b740", "#dd9a65", "#F5BF2A", "#FDC601", "#FEE86B", "#FCDC27", "#F8B847")
 
-honeyperstate <- honeyproduction %>%
-    group_by(state) %>%
-    summarise(sumprod=sum(totalprod)) %>%
+honeyperstate <- total_production %>%
+    group_by(StateName) %>%
+    summarise(sumprod=sum(totalprod_kg)) %>%
     arrange(sumprod) %>%
     mutate(percentage=round(sumprod/sum(sumprod)*100,2)) %>% 
     top_n(10)
     
 ggplot(data=honeyperstate,
           aes(
-              x=reorder(state,sumprod),
+              x=reorder(StateName,sumprod),
               y=sumprod/1000000
           )
        )+
-       geom_col(aes(fill=state),show.legend=F)+
+       geom_col(aes(fill=StateName),show.legend=F)+
        geom_text(aes(label=percentage))+
        coord_flip()+
        labs(
-         title="Total honey produced per state from 1992 to 2017", 
-         x="U.S. states",
+         title="Top 10 honey producing states from 1991 to 2017", 
+         subtitle = "Percentage of the total production (bars) and total amount (x-axis)",
          y="total honey produced [million kg]"
          )  +
        scale_fill_manual(values = myCol) +
@@ -289,7 +289,7 @@ Row {data-height=100}
 Row {data-height=800}
 -------------------------------------
 ###
-![](www/tilegram100000.png)
+![](www/tilegram1.png)
 
 Row {data-height=200}
 -------------------------------------
@@ -340,7 +340,26 @@ total_production %>%
 
 
 ggplotly(p)
+```
 
+###
+```{r}
+scatter_ggplot = 
+  sumregion_year %>%
+  ggplot(aes(x = year, y = numcol, color = Region, fill= Region)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    title="Number of honeyproducing colonies after regions",
+    x="year", 
+    y="number of colonies in total") +
+  #scale_viridis() +
+  scale_color_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
+  scale_fill_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
+  coord_cartesian() +
+  theme_minimal()
+
+ggplotly(scatter_ggplot)
 ```
 
 Row {data-height=200}
@@ -627,7 +646,7 @@ Row {data-height=100}
 Row {data-height=900}
 -------------------------------------
 ###
-What did we learn?
+<strong>What did we learn?</strong>
 
 <ul>
   <li>Most honey is produced in the midwest</li>
