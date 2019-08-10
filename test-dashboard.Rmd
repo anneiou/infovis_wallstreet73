@@ -133,11 +133,11 @@ pesticide_total <- total_production %>%
             )
 
 sumstate_total <- total_production %>%
-  group_by(StateName, add = TRUE) %>%
+  group_by(StateName, Region, add = TRUE) %>%
   summarise(numcol = sum(numcol),
             stocks = sum(stocks),
             yieldpercol_kg = sum(yieldpercol_kg),
-            price_per_kg = sum(price_per_kg),
+            #price_per_kg = sum(price_per_kg),
             totalprod_kg = sum(totalprod_kg)
             )
 
@@ -233,27 +233,28 @@ Row {data-height=1000}
 -------------------------------------
 ###
 ```{r, eval = TRUE}
-myCol <- c("#FE8C01", "#FCA235", "#FAAC25", "#e5b740", "#dd9a65", "#F8B847", "#F5BF2A", "#FDC601", "#FCDC27", "#FEE86B")
+myCol <- c("#FE8C01", "#FCA235", "#FAAC25", "#e5b740", "#dd9a65", "#F5BF2A", "#FDC601", "#FEE86B", "#FCDC27", "#F8B847")
 
-honeyperstate <- honeyproduction %>%
-    group_by(state) %>%
-    summarise(sumprod=sum(totalprod)) %>%
+honeyperstate <- total_production %>%
+    group_by(StateName, totalprod_kg) %>%
+    summarise(sumprod=sum(totalprod_kg)) %>%
     arrange(sumprod) %>%
     mutate(percentage=round(sumprod/sum(sumprod)*100,2)) %>% 
     top_n(10)
     
 ggplot(data=honeyperstate,
           aes(
-              x=reorder(state,sumprod),
+              x=reorder(StateName, sumprod),
               y=sumprod/1000000
           )
        )+
-       geom_col(aes(fill=state),show.legend=F)+
+       geom_col(aes(fill=StateName),show.legend=F)+
        geom_text(aes(label=percentage))+
        coord_flip()+
        labs(
-         title="Total honey produced per state from 1992 to 2017", 
-         x="U.S. states",
+         title="Total honey produced per state from 1991 to 2017", 
+         subtitle = "Percentage of the total production (bars) and total amount (x-axis)",
+         x="Top 10 United States",
          y="total honey produced [million kg]"
          )  +
        scale_fill_manual(values = myCol) +
@@ -263,6 +264,24 @@ ggplot(data=honeyperstate,
 
 ###
 As we have seen, a lot of honey was produced in the Midwest. And indeed, North Dakota (1992-2017) was the main producer of honey and produced 18.2 million kilos of honey. The top 10 states are North Dakota (Midwest), California (West), South Dakota (Midwest), Florida (South), Montana (West), Minnesota (Midwest), Texas (South), Wisconsin (Midwest), Michigan (Midwest) and Idaho (West) .
+
+sumstate_total <- total_production %>%
+  group_by(StateName, Region, add = TRUE) %>%
+  summarise(numcol = sum(numcol),
+            stocks = sum(stocks),
+            #yieldpercol_kg = sum(yieldpercol_kg),
+            #price_per_kg = sum(price_per_kg),
+            totalprod_kg = sum(totalprod_kg)
+            )
+            
+```{r}
+
+
+kable(sumstate_total) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "float_right")
+```
+
+
 
 Row {data-height=100}
 -------------------------------------
@@ -289,7 +308,7 @@ Row {data-height=100}
 Row {data-height=800}
 -------------------------------------
 ###
-![](www/tilegram100000.png)
+![](www/tilegram1.png)
 
 Row {data-height=200}
 -------------------------------------
@@ -343,10 +362,36 @@ ggplotly(p)
 
 ```
 
+###
+```{r}
+scatter_ggplot = 
+  sumregion_year %>%
+  ggplot(aes(x = year, y = numcol, color = Region, fill= Region)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    title="Number of honeyproducing colonies after regions",
+    x="year", 
+    y="number of colonies in total") +
+  #scale_viridis() +
+  scale_color_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
+  scale_fill_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
+  coord_cartesian() +
+  theme_minimal()
+
+ggplotly(scatter_ggplot)
+```
+
 Row {data-height=200}
 -------------------------------------
 ###
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+```{r}
+
+kable(sumstate_total) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "float_right")
+```
 
 Row {data-height=100}
 -------------------------------------
@@ -391,10 +436,55 @@ scatter_ggplot =
 ggplotly(scatter_ggplot)
 ```
 
+```{r}
+scatter_ggplot = 
+  total_production %>%
+  group_by(Region, year, nAllNeonic_kg) %>%
+  mutate(neonicyear = sum(nAllNeonic_kg)) %>%
+  ggplot(aes(x = year, y = neonicyear, color = Region, fill= Region)) +
+  geom_point() +
+  #geom_line() +
+  labs(
+    title="Used pesticides in after regions from 1994-2017",
+    x="year", 
+    y="amount of pesticides in kilogram") +
+  #scale__viridis() +
+  scale_color_manual(values=c("#006400", "#32CD32", "#A2CD5A", "#B3EE3A")) +
+  scale_fill_manual(values=c("#006400", "#32CD32", "#A2CD5A", "#B3EE3A")) +
+  coord_cartesian() +
+  theme_minimal()
+
+ggplotly(scatter_ggplot)
+```
+
+
+
+```{r, eval = FALSE}
+scatter_ggplot = 
+  total_production %>%
+  ggplot(aes(x = year, y = numcol/100000, color = StateName, fill= StateName)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    title="Number of honeyproducing colonies after regions",
+    x="year", 
+    y="number of colonies in 100k") +
+  #scale_viridis() +
+  #scale_color_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
+ # scale_fill_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
+  coord_cartesian() +
+  theme_minimal()
+
+ggplotly(scatter_ggplot)
+```
+
+
+
 Row {data-height=200}
 -------------------------------------
 ###
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
 
 Row {data-height=100}
 -------------------------------------
@@ -554,6 +644,46 @@ ggplot(data=pesticides_year_total,
   scale_colour_manual(values = c("#e5b740", "green")) + 
   labs(y = "Honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
   ggtitle("Year 2000 - What happened to our honey?") +
+  theme_minimal()
+```
+
+```{r paged.print=TRUE, eval = FALSE}
+year_col <- total_production %>%
+  group_by(year) %>%
+  summarise(colony_year=sum(numcol))
+
+pesticides_year_neonics <- pesticides %>% 
+  na.omit(nAllNeonic) %>% 
+  group_by(year) %>% 
+  summarise(neonics_year=sum(nAllNeonic))
+
+pesticides_year_total <- merge(year_col, pesticides_year_neonics)
+
+ggplot(data=pesticides_year_total,
+                 aes(x = year)
+                 ) + 
+             geom_line(aes(y = colony_year, colour = "number of colonies")) + 
+             geom_line(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
+             scale_y_continuous(breaks=c(
+                                          0, 500000, 1000000, 1500000,
+                                          2000000, 2500000, 3000000, 3500000
+                                        ),
+                              #  labels=c( 
+                                      #   "0", "500.000", "100.000", "150.000", "200.000", "250.000", "300.000", "350.000"
+                                      #   ),
+                                sec.axis = sec_axis(~./30,
+                                                    name = "Neonics applied in the US [million kg]",
+                                                    breaks=c(0, 500000, 1000000, 1500000,
+                                                             2000000, 2500000, 3000000, 3500000),
+                                                    labels=c("0", "0,5", "1", "1,5", 
+                                                             "2", "2,5", "3", "3,5")
+                                                    )
+                                ) +
+  geom_point(aes(y = colony_year, colour = "number of colonies")) + 
+  geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
+  scale_colour_manual(values = c("green", "#e5b740")) + 
+  labs(y = "Number of honeyproducing colonies in the US", x = "Year", colour = "Parameter") +
+  ggtitle("Year 2000 - What happened to our bees?") +
   theme_minimal()
 ```
 
