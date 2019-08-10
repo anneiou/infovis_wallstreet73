@@ -13,10 +13,11 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
-library(tidyverse, quietly = TRUE, warn.conflicts = FALSE) #because...duh
+library(shiny)
+library(tidyverse, quietly = TRUE, warn.conflicts = FALSE)
 library(readxl)
 library(viridis) #awesome color-blind friendly palette
-library(janitor) #clean data
+library(janitor)
 library(ggplot2)
 library(knitr)
 library(cowplot)
@@ -25,18 +26,15 @@ library(measurements)
 library(dygraphs)
 library(flexdashboard)
 library(plotly)
-library(shiny)
 library(psych)
 library(DT)
 library(rworldmap)
 library(kableExtra)
 library(gapminder)
-
-#colorbrewer palette YlOrBr
 ```
 
 ```{r}
-#honeyporduction dataframe
+#honeyproduction dataframe
 honeyproduction <- read.csv(file="honeyproduction.csv", header=TRUE, sep=",")
 
 #Umrechnen von Pfund in Kilogramm
@@ -45,7 +43,6 @@ honeyproduction <- honeyproduction %>%
          price_per_kg = priceperlb / conv_unit(1, "lbs", "kg"),
          totalprod_kg = conv_unit(totalprod, "lbs", "kg")
          )
-#nomissing values 
 #colSums(is.na(honeyproduction))
 ```
 
@@ -84,6 +81,7 @@ sumregion_year <- total_production %>%
   summarise(numcol = sum(numcol),
             stocks = sum(stocks),
             yieldpercol_kg = sum(yieldpercol_kg),
+            priceperlb = mean(priceperlb),
             #price_per_kg = sum(price_per_kg),
             #nAllNeonic_kg = sum(nAllNeonic_kg),
             totalprod_kg = sum(totalprod_kg)
@@ -96,7 +94,6 @@ sumregion_total <- total_production %>%
             stocks = sum(stocks),
             yieldpercol_kg = sum(yieldpercol_kg),
             #price_per_kg = sum(price_per_kg),
-            #nAllNeonic_kg = sum(nAllNeonic_kg),
             totalprod_kg = sum(totalprod_kg)
             )
 
@@ -140,6 +137,12 @@ sumstate_total <- total_production %>%
             #price_per_kg = sum(price_per_kg),
             totalprod_kg = sum(totalprod_kg)
             )
+
+sumstate_total2 <- total_production %>%
+  group_by(StateName, Region, add = TRUE) %>%
+  summarise(totalprod_kg = sum(totalprod_kg)
+            )
+
 
 data2017 <-  sumregion_year[  sumregion_year$year=="2017" , ]
 
@@ -236,7 +239,7 @@ Row {data-height=1000}
 myCol <- c("#FE8C01", "#FCA235", "#FAAC25", "#e5b740", "#dd9a65", "#F5BF2A", "#FDC601", "#FEE86B", "#FCDC27", "#F8B847")
 
 honeyperstate <- total_production %>%
-    group_by(StateName, totalprod_kg) %>%
+    group_by(StateName) %>%
     summarise(sumprod=sum(totalprod_kg)) %>%
     arrange(sumprod) %>%
     mutate(percentage=round(sumprod/sum(sumprod)*100,2)) %>% 
@@ -244,7 +247,7 @@ honeyperstate <- total_production %>%
     
 ggplot(data=honeyperstate,
           aes(
-              x=reorder(StateName, sumprod),
+              x=reorder(StateName,sumprod),
               y=sumprod/1000000
           )
        )+
@@ -252,9 +255,8 @@ ggplot(data=honeyperstate,
        geom_text(aes(label=percentage))+
        coord_flip()+
        labs(
-         title="Total honey produced per state from 1991 to 2017", 
+         title="Top 10 honey producing states from 1991 to 2017", 
          subtitle = "Percentage of the total production (bars) and total amount (x-axis)",
-         x="Top 10 United States",
          y="total honey produced [million kg]"
          )  +
        scale_fill_manual(values = myCol) +
@@ -277,7 +279,7 @@ sumstate_total <- total_production %>%
 ```{r}
 
 
-kable(sumstate_total) %>%
+kable(sumstate_total2) %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "float_right")
 ```
 
@@ -359,7 +361,26 @@ total_production %>%
 
 
 ggplotly(p)
+```
 
+###
+```{r}
+scatter_ggplot = 
+  sumregion_year %>%
+  ggplot(aes(x = year, y = numcol, color = Region, fill= Region)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    title="Number of honeyproducing colonies after regions",
+    x="year", 
+    y="number of colonies in total") +
+  #scale_viridis() +
+  scale_color_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
+  scale_fill_manual(values=c("#e5b740", "#595242", "#975422", "#dc842a")) +
+  coord_cartesian() +
+  theme_minimal()
+
+ggplotly(scatter_ggplot)
 ```
 
 ###
@@ -435,28 +456,6 @@ scatter_ggplot =
 
 ggplotly(scatter_ggplot)
 ```
-
-```{r}
-scatter_ggplot = 
-  total_production %>%
-  group_by(Region, year, nAllNeonic_kg) %>%
-  mutate(neonicyear = sum(nAllNeonic_kg)) %>%
-  ggplot(aes(x = year, y = neonicyear, color = Region, fill= Region)) +
-  geom_point() +
-  #geom_line() +
-  labs(
-    title="Used pesticides in after regions from 1994-2017",
-    x="year", 
-    y="amount of pesticides in kilogram") +
-  #scale__viridis() +
-  scale_color_manual(values=c("#006400", "#32CD32", "#A2CD5A", "#B3EE3A")) +
-  scale_fill_manual(values=c("#006400", "#32CD32", "#A2CD5A", "#B3EE3A")) +
-  coord_cartesian() +
-  theme_minimal()
-
-ggplotly(scatter_ggplot)
-```
-
 
 
 ```{r, eval = FALSE}
@@ -568,7 +567,7 @@ honeyyear <- total_production %>%
   group_by(year) %>%
   summarise(YearTotal=sum(totalprod))
 
-ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title = "How much honey did the USA produce between xx and xx?")) + 
+ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title = "How much honey did the USA produce between 1991 and 2017?")) + 
   geom_smooth(method = "lm", color = "#975422") + 
   geom_line(color = "#f3a328", size = 2) +
   geom_point() +
@@ -647,45 +646,7 @@ ggplot(data=pesticides_year_total,
   theme_minimal()
 ```
 
-```{r paged.print=TRUE, eval = FALSE}
-year_col <- total_production %>%
-  group_by(year) %>%
-  summarise(colony_year=sum(numcol))
 
-pesticides_year_neonics <- pesticides %>% 
-  na.omit(nAllNeonic) %>% 
-  group_by(year) %>% 
-  summarise(neonics_year=sum(nAllNeonic))
-
-pesticides_year_total <- merge(year_col, pesticides_year_neonics)
-
-ggplot(data=pesticides_year_total,
-                 aes(x = year)
-                 ) + 
-             geom_line(aes(y = colony_year, colour = "number of colonies")) + 
-             geom_line(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
-             scale_y_continuous(breaks=c(
-                                          0, 500000, 1000000, 1500000,
-                                          2000000, 2500000, 3000000, 3500000
-                                        ),
-                              #  labels=c( 
-                                      #   "0", "500.000", "100.000", "150.000", "200.000", "250.000", "300.000", "350.000"
-                                      #   ),
-                                sec.axis = sec_axis(~./30,
-                                                    name = "Neonics applied in the US [million kg]",
-                                                    breaks=c(0, 500000, 1000000, 1500000,
-                                                             2000000, 2500000, 3000000, 3500000),
-                                                    labels=c("0", "0,5", "1", "1,5", 
-                                                             "2", "2,5", "3", "3,5")
-                                                    )
-                                ) +
-  geom_point(aes(y = colony_year, colour = "number of colonies")) + 
-  geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
-  scale_colour_manual(values = c("green", "#e5b740")) + 
-  labs(y = "Number of honeyproducing colonies in the US", x = "Year", colour = "Parameter") +
-  ggtitle("Year 2000 - What happened to our bees?") +
-  theme_minimal()
-```
 
 ###
 In a 2013, the European Food Safety Authority (EFSA) has been assigned by the European Union to conduct scientific research to the impact of neonicotinoids on honeybees. The studies findings stated that "neonicotinoids pose an unacceptably high risk to bees" and that previous research commissioned by insecticide manufacturers contained inexplicable data gaps. In response, the use of certain neonicotinoids has been restriced and tightend up over the years. 
@@ -746,6 +707,60 @@ Row {data-height=100}
 
 
 
+
+
+
+Pesticide Use {data-navmenu="Story"}
+=====================================
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<h3>Spreads like pest(icides)!</h3>
+
+Row {data-height=1000}
+-------------------------------------
+
+```{r}
+scatter_ggplot2 = 
+  pesticideregion_total %>%
+    group_by(year, Region) %>%
+  na.omit(nAllNeonic_kg) %>%
+  summarise(sumNeonic = sum(nAllNeonic_kg/1)) %>%
+  ggplot(aes(x = year, y = sumNeonic, color = Region, fill= Region)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    title="Used pesticides in after regions from 1994-2017",
+    x="year", 
+    y="amount of pesticides in kilogram") +
+  #scale__viridis() +
+  scale_color_manual(values=c("#006400", "#32CD32", "#A2CD5A", "#B3EE3A")) +
+  scale_fill_manual(values=c("#006400", "#32CD32", "#A2CD5A", "#B3EE3A")) +
+  coord_cartesian() +
+  theme_minimal()
+
+ggplotly(scatter_ggplot2)
+```
+
+###
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+Row {data-height=100}
+-------------------------------------
+### {.no-padding}
+<p style="text-align: left;">
+  [![Image name](www/left-arrow.png){width=50px}](#neonicotinoids)&nbsp;&nbsp;&nbsp;Which neonics are used? 
+</p>
+
+### {.no-padding}
+<p style="text-align: right;">
+  What did we learn?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#summary)
+</p>
+
+
+
+
 Summary {data-navmenu="Story"}
 =====================================
 
@@ -757,7 +772,7 @@ Row {data-height=100}
 Row {data-height=900}
 -------------------------------------
 ###
-What did we learn?
+<strong>What did we learn?</strong>
 
 <ul>
   <li>Most honey is produced in the midwest</li>
@@ -856,7 +871,7 @@ Row {data-height=100}
 Row {data-height=700}
 -------------------------------------
 ###
-![krankheiten der bienen](www/healthstatus1.png)
+![](www/healthstatus1.png)
 
 ###
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
@@ -883,7 +898,7 @@ Row {data-height=300}
 
 
 
-Credits & Legal {}
+About {}
 =====================================
 Row {data-height=700}
 -------------------------------------
