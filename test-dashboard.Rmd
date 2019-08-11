@@ -798,9 +798,9 @@ Row {data-height=900}
   <li>The northeast has the highest honey price while producing the least</li>
   <li>With 18.2 M kg since 1992, North Dakota is the #1 honey producer in the US</li>
 </ul>
+<p>
+<center><img src="www/beeheader.png" width="80%" height="80%"></center>
 
-<br>
-<hr>
 <strong>Our Advice</strong>
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
