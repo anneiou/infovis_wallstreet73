@@ -792,7 +792,7 @@ Row {data-height=100}
 -------------------------------------
 ### {.no-padding}
 <p style="text-align: left;">
-  [![Image name](www/left-arrow.png){width=50px}](#honey-and-neonic-pesticides)&nbsp;&nbsp;&nbsp;A dramatic turn of... honey? 
+  [![Image name](www/left-arrow.png){width=50px}](#pesticide-use)&nbsp;&nbsp;&nbsp;Spreads like pest(icides)! 
 </p>
 
 ### {.no-padding}
