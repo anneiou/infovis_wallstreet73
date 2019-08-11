@@ -176,7 +176,7 @@ Row {data-height=200}
 -------------------------------------
 ###
 <h1 style="text-align: center; color: rgba(147, 197, 75, 1); letter-spacing: 5px; word-spacing: 10px; text-shadow: 2px 2px lightgrey;">
-  Fly around and discover the Story of the Bees!
+  Fly around and discover the story of the bees!
 </h1>
 
 Row {data-height=300}
@@ -190,7 +190,7 @@ Row {data-height=300}
 <center>Health Status</center>
 
 ### 
-<center>[![The Honey Bee](www/bee.png){width=150px}](#species)</center>
+<center>[![The Honey Bee](www/bee2.png){width=150px}](#species)</center>
 <center>The Honey Bee</center>
 
 
@@ -272,7 +272,7 @@ ggplot(data=honeyperstate,
 ```
 
 ###
-
+<strong>North Dakota - Honey El Dorado</strong><p>
 ```{r}
 kable(sumstate_total2) %>%
   kable_styling(bootstrap_options = "striped", "hover", "condensed", "responsive", full_width = F, position = "float_right", fixed_thead = T)
@@ -311,7 +311,7 @@ Row {data-height=100}
 Row {data-height=800}
 -------------------------------------
 ###
-![](www/tilegram1.png)
+![Cartogram with the total honey production per state in 2017](www/tilegram1.png)
 
 Row {data-height=200}
 -------------------------------------
@@ -833,25 +833,28 @@ Row {data-height=600}
 Row {data-height=150}
 -------------------------------------
 ###
+<strong>Bee Species (Apis mellifera)</strong> <br>
+The bee species Apis mellifera, the western honeybee, is typically distributed in Africa, Europe and parts of western Asia (see picture above). In this habitat, there are numerous variations in the behavior, appearance and genetic code of the animals, which is why numerous sub-species have developed in the course of evolution that differ phylogenetically [8]. Three of these subspecies were discovered as part of the Machine Learning dataset in the United States.
+
 <strong>Western bee (Apis mellifera)</strong> <br>
-Most common of the 7-12 species. Like all honey bee species, the western honey bee is eusocial, creating colonies with a single fertile female (or "queen"), many normally non-reproductive females or "workers", and a small proportion of fertile males or "drones". Individual colonies can house tens of thousands of bees. Colony activities are organized by complex communication between individuals, through both pheromones and the dance language. Western honey bees are threatened by pests and diseases, especially the Varroa mite and colony collapse disorder. [Source: 2]
+"Most common of the 7-12 species. Like all honey bee species, the western honey bee is eusocial, creating colonies with a single fertile female (or "queen"), many normally non-reproductive females or 'workers', and a small proportion of fertile males or 'drones'. Individual colonies can house tens of thousands of bees. Colony activities are organized by complex communication between individuals, through both pheromones and the dance language. Western honey bees are threatened by pests and diseases, especially the Varroa mite and colony collapse disorder". [Source: 2]
 
 Row {data-height=350}
 -------------------------------------
 ###
 <strong>Russian Honey Bee</strong><br>
-The Russian honeybee refers to honey bees (Apis mellifera) that originate in the Primorsky Krai region of Russia. This strain of bee was imported into the United States in 1997 by the USDA's Honeybee Breeding, Genetics & Physiology Laboratory in Baton Rouge, Louisiana in response to severe declines in bee populations caused by infestations of parasitic mites, and has been used in breeding programs to improve existing stocks. Russian honey bees have an innate resistance to various parasitic mites. This strain occurs in the original native range of the varroa mite, and selective pressure could have favored bees that exhibited aggressive behavior against colony-level mite infestations. Accordingly, experimental research has found that mite populations decline in colonies of pure Russian[2] and of hybrid Russian-Italian bees. The mechanisms through which mite populations are controlled in these colonies include hygienic behavior towards mites,[4] and possibly increased aggression towards mites. Russian stocks also have been shown to resist infection by tracheal mites. 
-[Source: 3]
+"The Russian honeybee refers to honey bees (Apis mellifera) that originate in the Primorsky Krai region of Russia. This strain of bee was imported into the United States in 1997 by the USDA's Honeybee Breeding, Genetics & Physiology Laboratory in Baton Rouge, Louisiana in response to severe declines in bee populations caused by infestations of parasitic mites, and has been used in breeding programs to improve existing stocks. Russian honey bees have an innate resistance to various parasitic mites. This strain occurs in the original native range of the varroa mite, and selective pressure could have favored bees that exhibited aggressive behavior against colony-level mite infestations. Accordingly, experimental research has found that mite populations decline in colonies of pure Russian[2] and of hybrid Russian-Italian bees. The mechanisms through which mite populations are controlled in these colonies include hygienic behavior towards mites, and possibly increased aggression towards mites. Russian stocks also have been shown to resist infection by tracheal mites."
+[3]
 
 ###
 <strong>Italian honey bee</strong><br> 
-Apis mellifera ligustica is the Italian bee which is a subspecies of the western honey bee (Apis mellifera). The Italian honey bee is thought to originate from the continental part of Italy, south of the Alps, and north of Sicily. The subspecies may have survived the last Ice Age in Italy.[1] It is genetically a different subspecies than that from the Iberian peninsula and from Sicily. It is the most widely distributed of all honey bees, and has proven adaptable to most climates from subtropical to cool temperate, but it is less successful in humid tropical regions. It is sometimes called the Ligurian bee.Italian bees, having been conditioned to the warmer climate of the central Mediterranean, are less able to cope with the "hard" winters and cool, wet springs of more northern latitudes. They do not form such tight winter clusters. More food has to be consumed to compensate for the greater heat loss from the loose cluster. The tendency to raise broods late in autumn also increases food consumption.
-[Source: 4]
+"Apis mellifera ligustica is the Italian bee which is a subspecies of the western honey bee (Apis mellifera). The Italian honey bee is thought to originate from the continental part of Italy, south of the Alps, and north of Sicily. The subspecies may have survived the last Ice Age in Italy.[1] It is genetically a different subspecies than that from the Iberian peninsula and from Sicily. It is the most widely distributed of all honey bees, and has proven adaptable to most climates from subtropical to cool temperate, but it is less successful in humid tropical regions. It is sometimes called the Ligurian bee.Italian bees, having been conditioned to the warmer climate of the central Mediterranean, are less able to cope with the "hard" winters and cool, wet springs of more northern latitudes. They do not form such tight winter clusters. More food has to be consumed to compensate for the greater heat loss from the loose cluster. The tendency to raise broods late in autumn also increases food consumption."
+[4]
 
 ###
 <strong>Carniolan honey bee</strong> </br>
-The Carniolan honey bee (Apis mellifera carnica, Pollmann) is a subspecies of the western honey bee. The Carniolan honey bee is native to Slovenia, southern Austria, and parts of Croatia, Bosnia and Herzegovina, Serbia, Hungary, Romania, and Bulgaria. It is favored among beekeepers for several reasons, not the least being its ability to defend itself successfully against insect pests while at the same time being extremely gentle in its behavior toward beekeepers. These bees are particularly adept at adjusting worker population to nectar availability. It relies on these rapid adjustments of population levels to rapidly expand worker bee populations after nectar becomes available in the spring, and, again, to rapidly cut off brood production when nectar ceases to be available in quantity. Carniolan honey bees are about the same size as the Italian honey bee, but they are physically distinguished by their generally dusky brown-grey color that is relieved by stripes of a subdued lighter brown color. Their chitin is dark, but it is possible to find lighter colored or brown colored rings and dots on their bodies. They are also known as the "grey bee". 
-[Source: 5]
+"The Carniolan honey bee (Apis mellifera carnica, Pollmann) is a subspecies of the western honey bee. The Carniolan honey bee is native to Slovenia, southern Austria, and parts of Croatia, Bosnia and Herzegovina, Serbia, Hungary, Romania, and Bulgaria. It is favored among beekeepers for several reasons, not the least being its ability to defend itself successfully against insect pests while at the same time being extremely gentle in its behavior toward beekeepers. These bees are particularly adept at adjusting worker population to nectar availability. It relies on these rapid adjustments of population levels to rapidly expand worker bee populations after nectar becomes available in the spring, and, again, to rapidly cut off brood production when nectar ceases to be available in quantity. Carniolan honey bees are about the same size as the Italian honey bee, but they are physically distinguished by their generally dusky brown-grey color that is relieved by stripes of a subdued lighter brown color. Their chitin is dark, but it is possible to find lighter colored or brown colored rings and dots on their bodies. They are also known as the 'grey bee'."
+[5]
 
 Locations  {data-navmenu="The Honey Bee"}
 =====================================
@@ -869,14 +872,24 @@ Row {data-height=800}
 Row {data-height=200}
 -------------------------------------
 ###
+<strong>Buzzing around in the US</strong>
+<br>
+In a study from 2018 that analyzed bees using machine learning videos and categorized them [c], different kinds of bee species were discovered at 7 locations: <br>
 1= San Jose, California <br>
 2= Saratoga, California <br>
 3= Alvin, Texas <br>
 4= New Orleans, Lousiana <br>
 5= Athens, Georgia <br>
 6= Des Moines, Indiana <br>
-7= Keene, New Hampshire <br>
-
+7= Keene, New Hampshire
+<p>
+Which bees are in the US?
+In a study that analyzed bees using machine learning videos and categorized them, different kinds of bee species were discovered at 7 locations.
+<br>
+On the map all cities are visible and marked with an arrow where the species have spread. An exception is San Jose (Location 1), because no special kind could be categorized here.
+On the page "Species" you can find out more about the bee species.<br>
+The Italian honey bee is most commonly represented and has been found mainly in the southern states with the exception of California. This is followed by the Russian honeybee, which was in Indiana and New Hampshire. Also in Indiana the Carniolan honey bee whirred around. The Western honey bee was categorized only 37 times. It also represents more of a general group of the subspecies Russian, Italian and Carniolan honeybee.
+Of course, the numbers are only a tiny fraction of the US bees and by no means representative. But it does not provide any assessment of what to find in the US.
 
 
 Health Status {data-navmenu="The Honey Bee"}
@@ -893,7 +906,30 @@ Row {data-height=700}
 ![](www/healthstatus1.png)
 
 ###
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+<strong>Bee threats</strong>
+<p>
+How are the bees, which were located in the seven cities in 2018, doing health-wise? [c] The state of health reveals numerous diseases that threaten some bees. Most bees are doing well in the first place (65%). However, 35% of the animals have to struggle with mites, ants, beetles, missing queens or robbed hives, etc and their health status is very poor. What are the diseases that can infect bees?
+
+$\color{#0174DF}{\text{Ant problems:}}$<br>
+Ants in the hive are often an indicator for other problems and a weakened colony. Because normally, a healthy and strong population would keep ants away by itself. Ants use the space inbetween the stock to raise their young, in the part where it's safe from bees. In case of ants travelling into the hive, an inspectation is needed. The ants could weaken the swarm even more and other, worse deseases are possible. Also new swarms need to be controlled regularly, because ants could take over the small colonies [10].
+
+$\color{#FE7A37}{\text{Hive beetles:}}$<br>
+Originally, these black-brown beetles with clubbed antennae come from sub-Saharan Africa but are not only a pest to bees in their home environment. But here, they attack beehives and cause the majority of the beehive damage. They burrow into the bee combs and eat brood, honey and pollen. This food is the reason, why the bees settle up in the hives. With a strong invasion, the bees become "slimed out" and the colonie, in the worst case, dies because the contaminated honey ferments (no food for the bee larvae)[9].
+<p>
+
+$\color{#FACC2E}{\text{Hive beeing robbed:}}$<br>
+It can happen that other bees rob an weaker hive, which can be caused by drought conditons e.g. by a lack of nectar. This typically happens in fall or winter but in warmer conditions, this can also happen in spring. An indicator for robbery can be an increased activity infront of the hive and fights. It is important, that only worker bees fight, because the male bees (drones) need to stay in the hive for the winter. Bees fighting inside the hive is in all cases a sure sign, that another colony intrudes the hive [11].
+
+$\color{#00CCD0}{\text{Missing queen:}}$<br>
+If the quee bee dies or is missing for a too long time, worker bees will start laying eggs. Since they are not fertile, they will only lay drone (male) eggs. Drones are not able to produce honey. Brood cells with drone larvae/eggs inside are rather raised than flat an spread all across the frame, not in a pattern. With less working bees, the population will sink until the hive is no longer able to keep itself alive [12].
+
+<p>
+$\color{#77C145}{\text{Varroa:}}$<br>
+Varroa mites are tiny parasites, that live on adult bees, but mainly on larvae and pupae from bees. Consequently, they weaken the bee in its development and also in the adult stage. You can notice them by the red-brown dots on the bee's neck. If a hive has the parasitic mite syndrom, they usually show a abnormal breeding pattern, sunken and chewed caps, their lavae is often sunken to the bottom of the cell. The worstcase leads to a reduced honeybee population, whereafter the queens get replaced and the hive finally collapses to death[9].
+
+<p><p><p><p>
+Beekeepers can contact our partner the Exotic Plant Pest Hotline $\color{red}{\text{📞1800 084 881}}$ in case of unusual bees or pests to get timely help for their bees. This way other bees and hives can be prevented from other sicknesses.
+
 
 Row {data-height=300}
 -------------------------------------
@@ -931,6 +967,18 @@ The use of pesticides, monocultures and other harmful environmental effects not 
 "Beeaware" supports local and regional beekeepers in their education through a broad reach. In addition, it is represented on numerous honey products from retail, so interested citizens quickly and easily get up to date information and research results around the bee world. In addition, beeaware supports the distribution of flower seeds to protect and preserve the habitat of wild and honey bees.
 How do I recognize beeaware?
 You always recognize products supported by beeaware on our logo (see below). From there, a QR code always leads to our website!
+<br><br>
+<strong>What data uses BEE AWARE?</strong><p>
+All datasets are hosted on kaggle.com and are provided by several institutions. The datasat about the honey production from 1998-2012 is provided by the National Agricultural Statistics Service (NASS), who is the primary data reporting body for the US Department of Agriculture (USDA).
+<p>
+Honey Production (1998-2012):<br>
+„In 2006, global concern was raised over the rapid decline in the honeybee population, an integral component to American honey agriculture. Large numbers of hives were lost to Colony Collapse Disorder, a phenomenon of disappearing worker bees causing the remaining hive colony to collapse. Speculation to the cause of this disorder points to hive diseases and pesticides harming the pollinators, though no overall consensus has been reached. Twelve years later, some industries are observing recovery but the American honey industry is still largely struggling. The U.S. used to locally produce over half the honey it consumes per year. Now, honey mostly comes from overseas, with 350 of the 400 million pounds of honey consumed every year originating from imports. This dataset provides insight into honey production supply and demand in America by state from 1998 to 2012.“<p>
+Honeybees and Neonic Pesticides:<br>
+This dataset is a combination by Honey Production in the USA, extended to the period 1998-2017. USGS's Pesticide National Synthesis Project has provided more data which has been added to this dataset. Therefore an evaluation of the statistical connections between Honey Production and the use of Neonicotinoid (neonic) pesticides is possible.<p>
+The BeeImage Dataset: Annotated Honey Bee Images:<br>
+This dataset contains 5,100+ bee images annotated with location, date, time, subspecies, health condition, caste, and pollen. It is used for machine learning, to classify bees in these categories, paving the way for more intelligent hive monitoring or beekeeping in general.
+<br>
+
 
 <hr>
 
@@ -950,11 +998,14 @@ https://www.greenpeace.de/sites/www.greenpeace.de/files/neonicotinoid_pesticides
 [5]https://en.wikipedia.org/wiki/Carniolan_honey_bee <br>
 [6]https://www.honey.com/honey-industry/statistics/retail-honey-price <br>
 [7]https://pitchinteractiveinc.github.io/tilegrams/<br>
+[8]Sheppard, W.S., Meixner, M.D. (2003): Apis mellifera pomonella, a new honey bee subspecies from Central Asia. In: Apidologie 34, p.367-375
+[9]https://beeaware.org.au/pests/
+[10]https://www.honeybeesuite.com/ants-beehive-help-your-colony/
+[11]https://backyardhive.com/blogs/managing-your-top-bar-hive/bees-robbing-a-hive
+[12]https://backyardbeekeeping.iamcountryside.com/health-pests/what-happens-when-the-queen-bee-dies/
+
 <strong>Images</strong> <br>
 Global distribution map: https://en.wikipedia.org/wiki/Western_honey_bee#/media/File:Apis_mellifera_distribution_map.svg <br>
-
-Tabelle Staaten, Region
-Maßstab PPT Grafiken
 
 Row {data-height=300}
 -------------------------------------
@@ -965,7 +1016,8 @@ RWTH Aachen <br><br>
 <strong>Founders</strong> <br>
 Anne Vollema <br>
 Tom Gerlach <br>
-
+© bee aware 2018<br>
+🐝🍯
 
 ###
 An initiative of Bee Aware
@@ -973,6 +1025,6 @@ An initiative of Bee Aware
 <center><img src="www/honigbiene.png"></center>
 
 ###
-![](www/thankyou.gif)
+![](www/thankyou2.gif)
 
 
