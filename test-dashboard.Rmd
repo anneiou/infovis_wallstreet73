@@ -280,7 +280,7 @@ kable(sumstate_total2) %>%
 <p>
 As we have seen, a lot of honey was produced in the Midwest. And indeed, North Dakota was the main producer of honey between 1991 and 2017 and produced 16.83% oft he US honey yield (3,73 Mio kg honey). Here you can see what percentage of total honey from the years 1991-2017 contribute to the top 10 states.
 <p>
-The top 10 states are North Dakota (Midwest), California (West), South Dakota (Midwest), Florida (South), Montana (West), Minnesota (Midwest), Texas (South), Wisconsin (Midwest), Michigan (Midwest) and Idaho (West). California and Florida also make the biggest contribution to honey in their Region, so we'll keep an eye on these states later. The top 10 States make out around 75% oft the total production amount in 26 years. The other 34 states account for only about 25% of honey production.
+The top 10 states are North Dakota (Midwest), California (West), South Dakota (Midwest), Florida (South), Montana (West), Minnesota (Midwest), Texas (South), Wisconsin (Midwest), Michigan (Midwest) and Idaho (West). California and Florida also make the biggest contribution to honey in their Region, so we'll keep an eye on these states later. The top 10 States make out around 74% oft the total production amount in 26 years. The other 34 states account for only about 26% of honey production.
 <p>
 To view the other states, you can scroll through the table here. 
             
@@ -316,7 +316,10 @@ Row {data-height=800}
 Row {data-height=200}
 -------------------------------------
 ###
-How are the state’s impact in our honey production? This map shows you the amount of honey produced in 2017. The area of a honeycomb corresponds to 100,000kg honey (values rounded up each time) and was arranged geographically. North Dakota and California stand out but also Montana, Florida and Texas take a clear size on the map. New York produces a lot of honey, despite its size. As seen before in the table, New York is just on rank 11 as the biggest honey producer of its region. The size of California is roughly proportional when you look at a US map. North Dakota, on the other hand, produces a lot of honey depending on its average land area. Of course, the card is just a simplification to get a feel for the benchmarks. The cartogram was created with tilegrams[7].
+<strong>Honey Production in 2017</strong>
+<p>
+What is the influence of states on honey production? This map shows you the amount of honey produced in 2017. The area of a honeycomb corresponds to 100,000kg honey (values rounded up each time) and was arranged geographically. North Dakota and California stand out but also Montana, Florida and Texas take a clear size on the map. New York produces a lot of honey, despite its size. As seen before in the table, New York is just on rank 11 as the biggest honey producer of its region. The size of California is roughly proportional when you look at a US map. North Dakota, on the other hand, produces a lot of honey depending on its average land area. Of course, the card is just a simplification to get a feel for the benchmarks.
+<p>The cartogram was created with tilegrams[7].
 
 Row {data-height=100}
 -------------------------------------
@@ -407,6 +410,7 @@ If we compare that to the number of native honey bees in their colonies, we see 
 <p>
 California was still in second place in the table with the top honey producers.
 However, in terms of bee colonies, California beats North Dakota and is the state with the most bee colonies. The table also confirms the two diagrams, in which the number of colonies and amount of honey are very similar.
+<p> numcol = Number of honeyproducing colonies, totalprod_kg = total production in kilogram
 
 
 Row {data-height=100}
@@ -477,6 +481,8 @@ ggplotly(scatter_ggplot)
 Row {data-height=200}
 -------------------------------------
 ###
+<strong>Honey - soon a luxus property? </strong>
+<p>
 We saw in the beginning that in the northeast of 2017 you had to pay up to \$10 per kilogram of honey. It wasn’t always like this. In 1991, honey cost just a whopping \$1,6 per kilo (\$0,72 per pound) in the northeast and only \$1,27 (\$0,58 per pound) in the west. After 2003, the honey price decreased for two years, about 50 cent. Since then it went steeply uphill - except for the West, where the honey price has fallen since 2012 as a mere back to just under a dollar to "today".
 
 
@@ -505,7 +511,8 @@ Row {data-height=1000}
 -------------------------------------
 ###
 ```{r, }
-total_production %>%
+#colonyplot=
+  total_production %>%
   select(year, totalprod_kg, numcol, yieldpercol_kg) %>% 
   group_by(year) %>% 
   summarize_each(funs(mean)) %>% 
@@ -523,15 +530,18 @@ total_production %>%
   guides(size = guide_legend("Honey Producing\nColonies"), limits = c(55000, 65000)) +
   theme_minimal() +
   labs(title = "Total U.S. Honey Production Decreases", 
-       x = "year", 
+       x = "", 
        y = "US Honey Production [million kg]") +
   NULL
 
+#ggplotly(colonyplot)
 #ggsave("honey.png", last_plot(), height = 4, width = 6, units = "in", dpi = 600)
 ```
 
 ###
-text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text 
+<strong>Downtrend</strong>
+<p>
+Let's take a look at the whole US and its honey. In the last 26 years, a clear trend has been seen from large colonies with high yields to large colonies with small yields. Thus not only the total honey production decreases, but also the respective yield of the colonies. The bee colonies are therefore weaker overall in their work. Between 2000 and 2009 it can be seen that the number of bee colony has decreased significantly but still a medium to high amount per colony was produced.
 
 Row {data-height=100}
 -------------------------------------
@@ -567,14 +577,19 @@ ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title = "How much honey 
   geom_line(color = "#f3a328", size = 2) +
   geom_point() +
   scale_x_continuous(breaks=seq(1991, 2017, 3)) +
-  labs(x="years", y="total honey produced [million kg]") + 
+  labs(x="year",
+       y="total honey produced [million kg]") + 
   theme_minimal()+
   ggtitle("How much honey did the USA produce between 1991 and 2017?") +
   background_grid(major = "xy", minor="y", size.major = 0.2) 
 ```
 
 ###
-In 1995, more than 210 million kilos of honey were produced by American bees. By 2015, the honey pots looked emptier, just under 150 million kilos of honey were the yield of recent years. Is there a reason?
+<strong>Dry spell</strong>
+<p>
+Now that we have looked at the different states and regions, we can now expect the overall situation around honey in the USA.
+<p>
+So you can see that after 220 million kilograms around 1991 now only about 150 million kilograms of the bees was produced. It is therefore to be expected that there will be less honey in the next few years. What could be the reason?
 
 Row {data-height=100}
 -------------------------------------
@@ -641,13 +656,15 @@ ggplot(data=pesticides_year_total,
   theme_minimal()
 ```
 
-
-
 ###
+<strong>Risk for the bees</strong>
+<p>
 In a 2013, the European Food Safety Authority (EFSA) has been assigned by the European Union to conduct scientific research to the impact of neonicotinoids on honeybees. The studies findings stated that "neonicotinoids pose an unacceptably high risk to bees" and that previous research commissioned by insecticide manufacturers contained inexplicable data gaps. In response, the use of certain neonicotinoids has been restriced and tightend up over the years. 
 In 2014, the US government under Barack Obama issued a blanket ban against the use of neonicotinoids on National Wildlife Refuges.
 In 2018, the Trump administration reversed this decision.
 
+<strong>Rise of the Neonicotinoids</strong>
+<p>
 The data shows a slight increase in use of neonic pesticides since 1994 and a strong rise starting in the early 2000s. At that time, besides imidacloprid, two other neonicotinoids, clothianidin and thiamethoxam, entered the market. After that point the amount of neonics applied rises drastically and only finally reaches a turning point in 2014, when neonicotinoids got restriced, and decreases by over 80%. 
 
 Row {data-height=100}
@@ -696,7 +713,7 @@ Row {data-height=100}
 
 ### {.no-padding}
 <p style="text-align: right;">
-  What did we learn?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#summary)
+  Spreads like pest(icides)!&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#pesticide-use)
 </p>
 
 
@@ -716,6 +733,7 @@ Row {data-height=100}
 Row {data-height=1000}
 -------------------------------------
 
+###
 ```{r}
 scatter_ggplot2 = 
   pesticideregion_total %>%
@@ -739,7 +757,13 @@ ggplotly(scatter_ggplot2)
 ```
 
 ###
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+<strong>Midwest overflow</strong>
+<p>
+Looking back at the graph comparing honey production with pesticide use, it is noticeable that the Midwest has a huge impact on the total amount of pesticides used. The northeast, which has few colonies but also produces little honey, also does not use many pesticides. Since 2003, the use has hardly risen there. Try zooming in on the 1995-2005 section (dragging a box with the mouse). Here is interesting that the Midwest used the least pesticides until 2003 and then depends on all other states.
+
+<strong>Pesticides for agriculture</strong>
+<p>
+The pesticides are mainly used for agriculture, which should protect the plants but also affect the bees. One can therefore assume that the northeast rather operates less agriculture. After 2014, there was obviously a significant decrease in pesticide use in all regions. And the midwest, which previously used huge amounts, uses less in 2015 than the southern states.
 
 Row {data-height=100}
 -------------------------------------
@@ -913,9 +937,9 @@ You always recognize products supported by beeaware on our logo (see below). Fro
 <h3>Credits</h3>
 <br>
 <strong>Datasets</strong> <br>
-https://www.kaggle.com/jessicali9530/honey-production <br>
-https://www.kaggle.com/kevinzmith/honey-with-neonic-pesticide <br>
-https://www.kaggle.com/jenny18/honey-bee-annotated-images <br>
+[a]https://www.kaggle.com/jessicali9530/honey-production <br>
+[b]https://www.kaggle.com/kevinzmith/honey-with-neonic-pesticide <br>
+[c]https://www.kaggle.com/jenny18/honey-bee-annotated-images <br>
 
 <strong>Web Articles</strong> <br>
 https://www.greenpeace.de/sites/www.greenpeace.de/files/neonicotinoid_pesticides_final_single_web_final.pdf <br>
