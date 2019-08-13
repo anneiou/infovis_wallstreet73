@@ -483,7 +483,7 @@ Row {data-height=200}
 ###
 <strong>Honey - soon a luxus property? </strong>
 <p>
-We saw in the beginning that in the northeast of 2017 you had to pay up to \$10 per kilogram of honey. It wasn’t always like this. In 1991, honey cost just a whopping \$1,6 per kilo (\$0,72 per pound) in the northeast and only \$1,27 (\$0,58 per pound) in the west. After 2003, the honey price decreased for two years, about 50 cent. Since then it went steeply uphill - except for the West, where the honey price has fallen since 2012 as a mere back to just under a dollar to "today".
+We saw in the beginning that in the northeast of 2017 you had to pay up to \$10 per kilogram of honey. It wasn’t always like this. In 1991, honey cost just a whopping \$1,6 per kilo (\$0,72 per pound) in the northeast and only \$1,27 (\$0,58 per pound) in the west. After 2003, the honey price decreased for two years about 50 cent. Since then it went steeply uphill - except for the West, where the honey price has fallen since 2012 as a mere back to just under a dollar to "today".
 
 
 Row {data-height=100}
