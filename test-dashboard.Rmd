@@ -6,8 +6,8 @@ output:
     vertical_layout: fill
     theme: sandstone
     logo: www/honigbiene.png
-    favicon: favicon.png
-    runtime: shiny
+    # favicon: www/favicon.png
+    # runtime: shiny
     figcaption: false
 ---
 
