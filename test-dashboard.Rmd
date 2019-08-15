@@ -791,8 +791,6 @@ Row {data-height=100}
 Row {data-height=900}
 -------------------------------------
 ###
-<strong>What did we learn?</strong>
-
 Honey production has decreased significantly in recent years. For this reason, more and more pesticides have been used in agriculture, which also harm the bees. Luckily, there is a downtrend in the use of pesticides.
 What can YOU do for the bees?
 <p>
