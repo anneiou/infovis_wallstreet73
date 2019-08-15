@@ -62,9 +62,7 @@ pesticides <- pesticides %>%
 
 
 ```{r, eval = TRUE}
-# total_production <- merge(honeyproduction, pesticides, by=c("state", "numcol", "stocks", "price_per_kg", "prodvalue", "year", "yieldpercol_kg", "price_per_kg", "total_prod"))
-
-
+#fuse both data frames 
 total_production <- bind_rows(honeyproduction, pesticides) 
 
 #remove duplicates by deleting missing N.A. row (region)
@@ -163,9 +161,9 @@ Row {data-height=500}
 -------------------------------------
 ###
 <center><h3>Welcome to BEE AWARE!</h3></center>
-Hello bee lover! You've found your way over our logo on a honey product to us and would like to learn more about the bees in the US who are responsible for your honey. Click through the history of the bees and receive prepared scientific investigations around the bee and honey world. In addition, you can learn about the health of the bees and what is buzzing through the United States.
+Hello bee lover! You've found your way here through our logo on a honey product and would like to learn more about the bees in the US who are responsible for your honey. Click through the story of the bees and receive prepared scientific investigations around the bee and honey world. In addition, you can learn about the health of the bees and what is buzzing through the United States.
 <p>
-The development of honey production and the price of honey, habitat of bees, hazards for bees and, above all, which bees are there anyway? All this shows the bee-aware.<p>
+The development of honey production and the price of honey, habitat of bees, hazards for bees and, above all, which bees are there anyway? All this is shown by BEE AWARE.<p>
 Fly off, there is a lot to discover!
 
 
@@ -186,10 +184,6 @@ Row {data-height=300}
 <center>The Story</center>
 
 ### 
-<center>[![Health Status](www/hospital.png){width=150px}](#health-status)</center>
-<center>Health Status</center>
-
-### 
 <center>[![The Honey Bee](www/bee2.png){width=150px}](#species)</center>
 <center>The Honey Bee</center>
 
@@ -206,15 +200,15 @@ Row {data-height=100}
 Row {data-height=500}
 -------------------------------------
 ###
-![Bees love the Midwest! There, bees hummed around in more than 16 Million beehives in 2017. In total, at least 30.4 Million beehives settled in the US in 2017, so many were counted anyway. It is impossible to imagine how many bees you will find in total! Look at the other regions as you continue.](www/stocks2017.png)
+![Bees love the Midwest! There, bees hummed around in more than 16 Million beehives in 2017. In total, at least 30.4 Million beehives settled in the US in 2017, that many were counted at least. It is impossible to imagine how many bees you will find in total! Look at the other regions as you continue.](www/stocks2017.png)
 
 ###
-![But not every hive was occupied (by individual colonies). Here you can see how many colonies are living in which region. This is about the same as the distribution of beehives. The most colonies are settled in the Midwest.](www/colonies2017.png)
+![But not every hive was occupied (by individual colonies). Here you can see how many colonies are living in each region. This is about the same as the distribution of beehives. Most colonies are settled in the Midwest.](www/colonies2017.png)
 
 Row {data-height=500}
 -------------------------------------
 ###
-![Unsurprisingly, the Midwest bees naturally provide the most honey. The industrious bees have produced more than 32 million kilograms of honey there! That's 32k tons of honey. If you take the amount of honey from the midwest as a full honey jar, then it looks pretty meager in the northeast. We'll look at it afterwards, if that's how it has always been.](www/totalhoney2017.png)
+![Unsurprisingly, the Midwest bees naturally provide the most honey. The industrious bees have produced more than 32 million kilograms of honey there! That's 32k tons of honey. If you take the amount of honey from the midwest as a full honey jar, then it looks pretty meager in the northeast. We'll look at it afterwards, if it has always been that way.](www/totalhoney2017.png)
 
 ###
 ![Again, the largest money bag represents the maximum, the other bags are on the scale. Amazingly, kilos of honey cost the least in the West with $4,29 per kilogram, that’s $1,95 per pound. In the northeast you pay more than $10 for it ($4,77 per pound). According to honey.com the average price for one kilogram of honey was $3,24 per kilogram ($7,16 per pound) in 2017. So except of the western regions, tasty honey got quite expensive. Was honey always such an expensive commodity?](www/honeyprice2017.png)
@@ -277,14 +271,13 @@ ggplot(data=honeyperstate,
 kable(sumstate_total2) %>%
   kable_styling(bootstrap_options = "striped", "hover", "condensed", "responsive", full_width = F, position = "float_right", fixed_thead = T)
 ```
+            
 <p>
 As we have seen, a lot of honey was produced in the Midwest. And indeed, North Dakota was the main producer of honey between 1991 and 2017 and produced 16.83% oft he US honey yield (3,73 Mio kg honey). Here you can see what percentage of total honey from the years 1991-2017 contribute to the top 10 states.
 <p>
-The top 10 states are North Dakota (Midwest), California (West), South Dakota (Midwest), Florida (South), Montana (West), Minnesota (Midwest), Texas (South), Wisconsin (Midwest), Michigan (Midwest) and Idaho (West). California and Florida also make the biggest contribution to honey in their Region, so we'll keep an eye on these states later. The top 10 States make out around 74% oft the total production amount in 26 years. The other 34 states account for only about 26% of honey production.
+The top 10 states are North Dakota (Midwest), California (West), South Dakota (Midwest), Florida (South), Montana (West), Minnesota (Midwest), Texas (South), Wisconsin (Midwest), Michigan (Midwest) and Idaho (West). These States make out around 74% oft the total production amount in 26 years. The other 34 states account for only about 26% of honey production.
 <p>
 To view the other states, you can scroll through the table here. 
-            
-
 
 Row {data-height=100}
 -------------------------------------
@@ -375,7 +368,7 @@ scatter_ggplot =
   geom_point() +
   geom_line() +
   labs(
-    title="Number of honeyproducing colonies after regions",
+    title="Number of honey producing colonies after regions",
     x="year", 
     y="number of colonies in total") +
   #scale_viridis() +
@@ -396,9 +389,9 @@ kable(sumstate_total) %>%
 Row {data-height=200}
 -------------------------------------
 ###
-<strong>Amount of honey produced after regions</strong>
+<strong>Undisputed Midwest</strong>
 <p>
-The US is very different, as are their bees. That's why we look at what the bee world looks like in different regions. We can see that in all regions there has been a decreasing trend in honey production in the last 26 years (1991-2017). There is less and less honey produced, with some strong fluctuations. The northeast is the most stable region, but also produces the least amount of honey, as we saw in the beginning. Particularly dramatic is the honey yield in the west. And in the Midwest, where we found most bees and most honey before, annual honey production fluctuates most.
+The US is very diverse, so are their bees. That's why we look at what the bee world looks like in different regions. We can see that in all regions there has been a decreasing trend in honey production in the last 26 years (1991-2017). There is less and less honey produced, with some strong fluctuations. The northeast is the most stable region, but also produces the least amount of honey, as we saw in the beginning. Particularly dramatic is the honey yield in the west. And in the Midwest, where we found most bees and most honey before, annual honey production fluctuates most.
 
 <br>
 <strong>Number of honeyproducing colonies</strong>
@@ -422,7 +415,7 @@ Row {data-height=100}
 
 ### {.no-padding}
 <p style="text-align: right;">
-  How did the honey price change over the past decades?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-price)
+  Honey honey honey, must be funny, in a rich man's world!&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#honey-price)
 </p>
 
 
@@ -481,9 +474,9 @@ ggplotly(scatter_ggplot)
 Row {data-height=200}
 -------------------------------------
 ###
-<strong>Honey - soon a luxus property? </strong>
+<strong>Honey - soon a luxury good? </strong>
 <p>
-We saw in the beginning that in the northeast of 2017 you had to pay up to \$10 per kilogram of honey. It wasn’t always like this. In 1991, honey cost just a whopping \$1,6 per kilo (\$0,72 per pound) in the northeast and only \$1,27 (\$0,58 per pound) in the west. After 2003, the honey price decreased for two years about 50 cent. Since then it went steeply uphill - except for the West, where the honey price has fallen since 2012 as a mere back to just under a dollar to "today".
+We saw in the beginning that in the northeast of 2017 you had to pay up to \$10 per kilogram of honey. It wasn’t always like this. In 1991, honey costed just a whopping \$1,6 per kilo (\$0,72 per pound) in the northeast and only \$1,27 (\$0,58 per pound) in the west. After 2003, the honey price decreased for two years about 50 cent. Since then it went steeply uphill - except for the West, where the honey price has fallen since 2012 as a mere back to just under a dollar to "today".
 
 
 Row {data-height=100}
@@ -531,7 +524,7 @@ Row {data-height=1000}
   theme_minimal() +
   labs(title = "Total U.S. Honey Production Decreases", 
        x = "", 
-       y = "US Honey Production [million kg]") +
+       y = "Average honey production of a US state [million kg]") +
   NULL
 
 #ggplotly(colonyplot)
@@ -576,7 +569,7 @@ ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title = "How much honey 
   geom_smooth(method = "lm", color = "#975422") + 
   geom_line(color = "#f3a328", size = 2) +
   geom_point() +
-  scale_x_continuous(breaks=seq(1991, 2017, 3)) +
+  scale_x_continuous(breaks=seq(1991, 2017, 5)) +
   labs(x="year",
        y="total honey produced [million kg]") + 
   theme_minimal()+
@@ -587,7 +580,7 @@ ggplot(data=honeyyear, aes(x=year, y=YearTotal/1000000, title = "How much honey 
 ###
 <strong>Dry spell</strong>
 <p>
-Now that we have looked at the different states and regions, we can now expect the overall situation around honey in the USA.
+Now that we have looked at the different states and regions, we can expect the overall situation around honey in the USA.
 <p>
 So you can see that after 220 million kilograms around 1991 now only about 150 million kilograms of the bees was produced. It is therefore to be expected that there will be less honey in the next few years. What could be the reason?
 
@@ -652,7 +645,7 @@ ggplot(data=pesticides_year_total,
   geom_point(aes(y = neonics_year*30, colour = "Neonic Pesticides")) + 
   scale_colour_manual(values = c("#e5b740", "green")) + 
   labs(y = "Honey produced in the US [million kg]", x = "Year", colour = "Parameter") +
-  ggtitle("Year 2000 - What happened to our honey?") +
+  ggtitle("Comparison of honey production and neonicotinoid application") +
   theme_minimal()
 ```
 
@@ -660,12 +653,13 @@ ggplot(data=pesticides_year_total,
 <strong>Risk for the bees</strong>
 <p>
 In a 2013, the European Food Safety Authority (EFSA) has been assigned by the European Union to conduct scientific research to the impact of neonicotinoids on honeybees. The studies findings stated that "neonicotinoids pose an unacceptably high risk to bees" and that previous research commissioned by insecticide manufacturers contained inexplicable data gaps. In response, the use of certain neonicotinoids has been restriced and tightend up over the years. 
-In 2014, the US government under Barack Obama issued a blanket ban against the use of neonicotinoids on National Wildlife Refuges.
-In 2018, the Trump administration reversed this decision.
+In 2014, the US government under Barack Obama issued a blanket ban against the use of neonicotinoids on National Wildlife Refuges. In 2018, the Trump administration reversed this decision.[13]
+</p>
 
 <strong>Rise of the Neonicotinoids</strong>
 <p>
 The data shows a slight increase in use of neonic pesticides since 1994 and a strong rise starting in the early 2000s. At that time, besides imidacloprid, two other neonicotinoids, clothianidin and thiamethoxam, entered the market. After that point the amount of neonics applied rises drastically and only finally reaches a turning point in 2014, when neonicotinoids got restriced, and decreases by over 80%. 
+</p>
 
 Row {data-height=100}
 -------------------------------------
@@ -700,9 +694,20 @@ Row {data-height=600}
 Row {data-height=400}
 -------------------------------------
 ###
+<strong>Meaning</strong>
+<p>
 "Neonicotinoids (sometimes shortened to neonics /ˈniːoʊnɪks/) are a class of neuro-active insecticides chemically similar to nicotine.[...] <br>
 Imidacloprid is the most widely used insecticide in the world.[...] <br>
-Most academic and governmental bodies agree that neonicotinoids have had a negative influence on bee populations." [Source: 1]
+Most academic and governmental bodies agree that neonicotinoids have had a negative influence on bee populations." [1]
+</p>
+
+###
+<strong>Vast Difference</strong>
+<p>
+The left graphic shows the amount of neonics applied in 2016 between the US regions. As we can see, the midwest is with over 20 tons by far the #1 applier of neonicotinoids. The second place goes to  the south, where only half the amount is used. The midwest and northeast are bareley comparable in their application: only a few tons of neonics where used here.    
+<br>
+In the right graphic the total amount of neonics applied in the US in 2016 is compared to 2014. This  is the year in US history where most neonics were used and after which governmental bans restriced the application. We can see a vast  decline  of almost 90% from  2014 to 2016.
+</p>
 
 Row {data-height=100}
 -------------------------------------
@@ -715,10 +720,6 @@ Row {data-height=100}
 <p style="text-align: right;">
   Spreads like pest(icides)!&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#pesticide-use)
 </p>
-
-
-
-
 
 
 
@@ -744,7 +745,7 @@ scatter_ggplot2 =
   geom_point() +
   geom_line() +
   labs(
-    title="Used pesticides in after regions from 1994-2017",
+    title="Used pesticides after regions from 1994-2017",
     x="year", 
     y="amount of pesticides in kilogram") +
   #scale__viridis() +
@@ -759,11 +760,11 @@ ggplotly(scatter_ggplot2)
 ###
 <strong>Midwest overflow</strong>
 <p>
-Looking back at the graph comparing honey production with pesticide use, it is noticeable that the Midwest has a huge impact on the total amount of pesticides used. The northeast, which has few colonies but also produces little honey, also does not use many pesticides. Since 2003, the use has hardly risen there. Try zooming in on the 1995-2005 section (dragging a box with the mouse). Here is interesting that the Midwest used the least pesticides until 2003 and then depends on all other states.
+Looking back at the graph comparing honey production with pesticide use, it is noticeable that the Midwest has a huge impact on the total amount of pesticides used. The northeast, which has few colonies but also produces little honey, also does not use many pesticides. Since 2003, the use has hardly risen there. Try zooming in on the 1995-2005 section (dragging a box with the mouse). The interesting thing here is that the Midwest used the least pesticides until 2003 and then depends on all other states.
 
 <strong>Pesticides for agriculture</strong>
 <p>
-The pesticides are mainly used for agriculture, which should protect the plants but also affect the bees. One can therefore assume that the northeast rather operates less agriculture. After 2014, there was obviously a significant decrease in pesticide use in all regions. And the midwest, which previously used huge amounts, uses less in 2015 than the southern states.
+The pesticides are mainly used for agriculture, which should protect the plants but also affects the bees. One can therefore assume that the Northeast rather operates less agriculture. After 2014, there was obviously a significant decrease in pesticide use in all regions. And the midwest, which previously used huge amounts, uses less in 2015 than the southern states.
 
 Row {data-height=100}
 -------------------------------------
@@ -776,7 +777,6 @@ Row {data-height=100}
 <p style="text-align: right;">
   What did we learn?&nbsp;&nbsp;&nbsp;[![Image name](www/right-arrow.png){width=50px}](#summary)
 </p>
-
 
 
 
@@ -793,12 +793,7 @@ Row {data-height=900}
 ###
 <strong>What did we learn?</strong>
 
-<ul>
-  <li>Most honey is produced in the midwest</li>
-  <li>The northeast has the highest honey price while producing the least</li>
-  <li>With 18.2 M kg since 1992, North Dakota is the #1 honey producer in the US</li>
-</ul>
-Honey production has decreased significantly in recent years. For this reason, more and more pesticides have been used in agriculture for about XX years, which also harm the bees. Luckily, there is a downtrend in the use of pesticides.
+Honey production has decreased significantly in recent years. For this reason, more and more pesticides have been used in agriculture, which also harm the bees. Luckily, there is a downtrend in the use of pesticides.
 What can YOU do for the bees?
 <p>
 <center><img src="www/beeheader.png" width="80%" height="80%"></center>
@@ -806,14 +801,15 @@ What can YOU do for the bees?
 <strong>Our Advice</strong>
 
 There are many ways that you can help maintain the quality of life for bees. It's easy and BEE AWARE supports you:
-<p><ul>
-<li>1. Sow bee-friendly plants, let your lawn get wild! Even a balcony works! 
-<li>2. choose honey from your region
-<li>3. give up on pesticides (don't use pesticides in your garden or field)
-<li>4. prefer bee-friendly foods (e.g. bio products)
-<li>5. stop Bee Diseases - Always rinse honey jars properly before putting them into the glas containers
-<li>6. offer nesting possibilities for wild bees (e.g. woodblocks with holes in it)
-<li>7. bee informed and aware
+<ol>
+  <li>sow bee-friendly plants, let your lawn get wild! Even a balcony works!</li>
+  <li>choose honey from your region </li>
+  <li>give up on pesticides (don't use pesticides in your garden or field)</li>
+  <li>prefer bee-friendly foods (e.g. bio products)</li>
+  <li>stop bee diseases - always rinse honey jars properly before putting them into the glas containers</li>
+  <li>offer nesting possibilities for wild bees (e.g. woodblocks with holes in it)</li>
+  <li>bee informed and aware</li>
+</ol>
  
 Click here to see more detailed information:  https://savebees.org/ 
 
@@ -971,13 +967,13 @@ Row {data-height=700}
 ###
 <h3>About BEE AWARE – Philosophy</h3>
 Without bees, our crops would be a lot lower, not only for fruits and vegetables but also for plants like cotton. Bees play a key role in the supply chain of humans and animals. In terms of biodiversity, the diversity of species, bees, especially wild bees, play a central role. They are an integral part of a functioning ecosystem, from which life, as we know it, depends in many ways. Without pollen and nectar collecting bees we miss important flower pollinators.
-The use of pesticides, monocultures and other harmful environmental effects not only threatens the honey bee, more than half of all wild bees are endangered. The danger is recognized and there are already several smaller and larger companies to protect the bees. What is missing, however, is a pooling of forces, a strong, long-range campaign and a central communications platform to channel public attention to the protection of wild bees. For this purpose, "beeaware" makes strong and provides an explanation about the situation of bees in the US. This results in the initiative "beeaware".
+The use of pesticides, monocultures and other harmful environmental effects not only threatens the honey bee, more than half of all wild bees are endangered. The danger is recognized and there are already several smaller and larger companies to protect the bees. What is missing, however, is a pooling of forces, a strong, long-range campaign and a central communications platform to channel public attention to the protection of wild bees. For this purpose, "beeaware" makes strong and provides an explanation about the situation of bees in the US. This results in the initiative BEE AWARE.
 <br><br>
 <strong>What is BEE AWARE doing?</strong>
 <br>
 "Beeaware" supports local and regional beekeepers in their education through a broad reach. In addition, it is represented on numerous honey products from retail, so interested citizens quickly and easily get up to date information and research results around the bee world. In addition, beeaware supports the distribution of flower seeds to protect and preserve the habitat of wild and honey bees.
 How do I recognize beeaware?
-You always recognize products supported by beeaware on our logo (see below). From there, a QR code always leads to our website!
+You always recognize products supported by BEE AWARE on our logo (see below). From there, a QR code always leads to our website!
 <br><br>
 <strong>What data uses BEE AWARE?</strong><p>
 All datasets are hosted on kaggle.com and are provided by several institutions. The datasat about the honey production from 1998-2012 is provided by the National Agricultural Statistics Service (NASS), who is the primary data reporting body for the US Department of Agriculture (USDA).
@@ -1000,8 +996,7 @@ This dataset contains 5,100+ bee images annotated with location, date, time, sub
 [b]https://www.kaggle.com/kevinzmith/honey-with-neonic-pesticide <br>
 [c]https://www.kaggle.com/jenny18/honey-bee-annotated-images <br>
 
-<strong>Web Articles</strong> <br>
-https://www.greenpeace.de/sites/www.greenpeace.de/files/neonicotinoid_pesticides_final_single_web_final.pdf <br>
+<strong>Articles</strong> <br>
 [1]https://en.wikipedia.org/wiki/Neonicotinoid <br>
 [2]https://en.wikipedia.org/wiki/Western_honey_bee <br>
 [3]https://en.wikipedia.org/wiki/Russian_honey_bee <br>
@@ -1009,11 +1004,12 @@ https://www.greenpeace.de/sites/www.greenpeace.de/files/neonicotinoid_pesticides
 [5]https://en.wikipedia.org/wiki/Carniolan_honey_bee <br>
 [6]https://www.honey.com/honey-industry/statistics/retail-honey-price <br>
 [7]https://pitchinteractiveinc.github.io/tilegrams/<br>
-[8]Sheppard, W.S., Meixner, M.D. (2003): Apis mellifera pomonella, a new honey bee subspecies from Central Asia. In: Apidologie 34, p.367-375
-[9]https://beeaware.org.au/pests/
-[10]https://www.honeybeesuite.com/ants-beehive-help-your-colony/
-[11]https://backyardhive.com/blogs/managing-your-top-bar-hive/bees-robbing-a-hive
-[12]https://backyardbeekeeping.iamcountryside.com/health-pests/what-happens-when-the-queen-bee-dies/
+[8]Sheppard, W.S., Meixner, M.D. (2003): Apis mellifera pomonella, a new honey bee subspecies from Central Asia. In: Apidologie 34, p.367-375 <br>
+[9]https://beeaware.org.au/pests/ <br>
+[10]https://www.honeybeesuite.com/ants-beehive-help-your-colony/ <br>
+[11]https://backyardhive.com/blogs/managing-your-top-bar-hive/bees-robbing-a-hive <br>
+[12]https://backyardbeekeeping.iamcountryside.com/health-pests/what-happens-when-the-queen-bee-dies/ <br>
+[13]https://www.greenpeace.de/sites/www.greenpeace.de/files/neonicotinoid_pesticides_final_single_web_final.pdf
 
 <strong>Images</strong> <br>
 Global distribution map: https://en.wikipedia.org/wiki/Western_honey_bee#/media/File:Apis_mellifera_distribution_map.svg <br>
@@ -1023,13 +1019,13 @@ Thank You GIF: https://dribbble.com/shots/3072535-Thank-you#shot-description
 Row {data-height=300}
 -------------------------------------
 ###
-<h3>Bee Aware Campaign</h3> <br>
+<h3>BEE AWARE Initiative</h3> <br>
 Informationsvisualisierung <br>
 RWTH Aachen <br><br>
 <strong>Founders</strong> <br>
 Anne Vollema <br>
 Tom Gerlach <br>
-© bee aware 2018<br>
+© bee aware 2019<br>
 🐝🍯
 
 ###
